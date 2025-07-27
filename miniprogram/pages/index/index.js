@@ -349,9 +349,9 @@ Page({
                         })
                         this.setData({
                             form: {
-                                name,
-                                num,
-                                greeting
+                                name: '',
+                                num: '',
+                                greeting: ''
                             },
                             greetings
                         })
