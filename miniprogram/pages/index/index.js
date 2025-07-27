@@ -3,10 +3,14 @@ const {
 } = require('../../common/utils')
 
 // 管理员openid列表，可以在云开发管理页找到，是管理员的话可以看到公告栏页面入口，也可以通过云函数greetings的返回值openid来查看，还可以在本文件getGreetings方法里通过打印openid变量来查看
-const MANAGER = ['']
+const MANAGER = [
+  'oddtMvoHhuv5eumbiFstJ1qA8CbE', //Corn
+  'oddtMvmz7zFsPVqmSpaSddCsIk9A'  //WXT
+]
 
 const APP = getApp()
 const isRemoved = APP.globalData.isRemoved
+
 
 Page({
     data: {
@@ -19,7 +23,7 @@ Page({
             num: '',
             greeting: ''
         },
-        weddingTimeStr: [], // 格式化的婚礼日期列表
+        weddingTimeStr: [''], // 格式化的婚礼日期列表
 
         // 以上变量都不用动，以下变量是需要手动修改的
 
@@ -42,7 +46,8 @@ Page({
 
         // 背景音乐（默认用陈奕迅的《I DO》，想换的话自己去找音频资源，我是在「婚贝」上找的）
         music: {
-            src: 'https://amp3.hunbei.com/mp3/IDo_ChenYiXun.mp3', // 音频资源链接
+            // src: 'https://amp3.hunbei.com/mp3/IDo_ChenYiXun.mp3', // 音频资源链接
+            src: '',
             name: 'I DO', // 歌名
             singer: '陈奕迅' // 歌手名
         },
@@ -178,6 +183,7 @@ Page({
     // 小程序可见时，拉取祝福语，并设置定时器每20s重新拉取一次祝福语
     onShow() {
         if (!isRemoved) {
+          console.log('here test')
             this.getGreetings()
 
             this.timer === null && (this.timer = setInterval(() => this.getGreetings(), 20000));
@@ -198,9 +204,19 @@ Page({
             this.music = wx.createInnerAudioContext({
                 useWebAudioImplement: false
             })
-            this.music.src = this.data.music.src
-            this.music.loop = true
-            this.music.autoplay = true
+            // this.music.src = this.data.music.src
+            //load music from cloudstorage
+            wx.cloud.getTempFileURL({
+              fileList: ['cloud://cloudbase-4gj6t13x12b6fc4b.636c-cloudbase-4gj6t13x12b6fc4b-1371179587/Yoga Lin-Otomen.mp3'],
+              success: res => {
+                this.setData({
+                  'music.src': res.fileList[0].tempFileURL
+                })
+                this.music.src = res.fileList[0].tempFileURL
+              }
+            })
+            this.music.loop = false
+            this.music.autoplay = false
         }
     },
 
@@ -360,14 +376,13 @@ Page({
                 openid
             }
         }) => {
+          console.log('当前用户 openid:', openid)
             const isManager = MANAGER.indexOf(openid) > -1
-            greetings.length && this.setData(this.data.activeIdx === -1 ? {
-                isManager,
-                greetings,
-                activeIdx: 0
-            } : {
-                isManager,
-                greetings
+            console.log('isManager: ', isManager, greetings.length)
+            this.setData({
+              isManager,
+              greetings,
+              ...(this.data.activeIdx === -1 && greetings.length ? { activeIdx: 0 } : {})
             })
         })
     },
