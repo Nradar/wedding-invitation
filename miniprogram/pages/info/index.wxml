@@ -5,15 +5,17 @@
     <view class="part-main">
         <view class="couple">
             <view wx:for="{{ couple }}" wx:key="name">
-                <image class="couple-cover" src="{{ item.image }}" mode="aspectFit" />
-                <button class="phone" bindtap="call" data-phone="{{ item.number }}"><image class="phone-icon" src="../../images/icon/phone.png" mode="aspectFit" />联系{{ item.alias }}</button>
+              <image class="couple-cover" src="{{ item.image }}" mode="aspectFit" />
+                <button class="phone phone-margin" bindtap="call" data-phone="{{ item.number }}"><image class="phone-icon" src="../../images/icon/phone.png" mode="aspectFit" />联系{{ item.alias }}</button>
+                <button class="phone" bindtap="showQRCode" data-qr="{{ item.wechatQr }}"><image class="phone-icon" src="../../images/icon/qrcode.svg" mode="aspectFit" />微信{{ item.alias }}</button>
             </view>
         </view>
 
         <view class="call-list">
             <view wx:for="{{ phone }}" wx:key="name" class="call-item">
                 <text>{{ item.name }}</text>
-                <button bindtap="call" data-phone="{{ item.number }}"><image class="phone-icon" src="../../images/icon/phone.png" mode="aspectFit" /></button>
+                <button wx:if="{{ item.wechatQr }}" bindtap="showQRCode" data-qr="{{ item.wechatQr }}"><image class="wechatqr-icon" src="../../images/icon/qrcode.svg" mode="aspectFit" /></button>
+                <button class="{{item.wechatQr ? 'phone-btn' : ''}}" bindtap="call" data-phone="{{ item.number }}"><image class="phone-icon" src="../../images/icon/phone.png" mode="aspectFit" /></button>
             </view>
         </view>
     </view>
@@ -34,8 +36,13 @@
         </view>
 
         <!-- 仅用于获取定位信息，获取后会打印到控制台并写入到粘贴板，正式发布时记得注释起来 -->
-        <button type="primary" size="mini" bindtap="chooseLocation">选择位置并获取定位信息</button>
+        <!-- <button type="primary" size="mini" bindtap="chooseLocation">选择位置并获取定位信息</button> -->
     </view>
+</view>
+
+<view class="part">
+  <view class="part-title">时间轴</view>
+  <button bindtap="goTimeline">点击打开时间轴</button>
 </view>
 
 <view class="part">
@@ -53,4 +60,21 @@
     <view class="part-main">
         <view class="info-list" wx:for="{{ info }}" wx:key="*this">{{ index + 1 }}. {{ item }}</view>
     </view>
+</view>
+
+<view wx:if="{{ showQrModal }}" class="qr-modal" catchtouchmove="true" >
+  <view class="qr-container">
+    <image
+      src="{{ currentQr }}"
+      mode="aspectFit"
+      style="width: 320px; height: 320px"
+      show-menu-by-longpress="true"
+    />
+    <view class="qr-tip">
+      <text>请长按识别二维码添加微信\n备注“姓名 + 宾客身份”（如：张三 + 新娘好友）</text>
+    </view>
+    <view class="qr-modal-close-container">
+      <button class="qr-modal-close-btn" bindtap="hideQRCode">关闭</button>
+    </view>
+  </view>
 </view>

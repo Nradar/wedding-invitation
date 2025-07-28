@@ -1,0 +1,470 @@
+/* 时间线容器 */
+.timeline-container {
+    padding: 20rpx;
+    background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+    min-height: 100vh;
+}
+
+/* 当前时间区域 */
+.current-time-section {
+    background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+    border-radius: 20rpx;
+    padding: 30rpx;
+    margin-bottom: 30rpx;
+    box-shadow: 0 8rpx 32rpx rgba(236, 72, 153, 0.3);
+    color: white;
+}
+
+/* 婚礼倒计时区域 */
+.wedding-countdown-section {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    border-radius: 20rpx;
+    padding: 40rpx 30rpx;
+    margin-bottom: 30rpx;
+    box-shadow: 0 8rpx 32rpx rgba(139, 92, 246, 0.3);
+    color: white;
+    text-align: center;
+}
+
+.countdown-icon {
+    font-size: 60rpx;
+    margin-bottom: 20rpx;
+    animation: pulse 2s infinite;
+}
+
+.countdown-title {
+    font-size: 32rpx;
+    font-weight: 600;
+    margin-bottom: 20rpx;
+    opacity: 0.9;
+}
+
+.countdown-days {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    margin-bottom: 20rpx;
+}
+
+.days-number {
+    font-size: 72rpx;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+    margin-right: 8rpx;
+    text-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.2);
+}
+
+.days-text {
+    font-size: 32rpx;
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+.countdown-message {
+    font-size: 26rpx;
+    opacity: 0.8;
+    font-style: italic;
+}
+
+/* 婚礼已结束区域 */
+.wedding-ended-section {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border-radius: 20rpx;
+    padding: 40rpx 30rpx;
+    margin-bottom: 30rpx;
+    box-shadow: 0 8rpx 32rpx rgba(16, 185, 129, 0.3);
+    color: white;
+    text-align: center;
+}
+
+.ended-icon {
+    font-size: 60rpx;
+    margin-bottom: 20rpx;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-10rpx);
+    }
+
+    60% {
+        transform: translateY(-5rpx);
+    }
+}
+
+.ended-title {
+    font-size: 36rpx;
+    font-weight: bold;
+    margin-bottom: 12rpx;
+}
+
+.ended-subtitle {
+    font-size: 28rpx;
+    opacity: 0.9;
+    margin-bottom: 20rpx;
+}
+
+.ended-message {
+    font-size: 26rpx;
+    opacity: 0.8;
+    font-style: italic;
+}
+
+.current-time {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20rpx;
+}
+
+.time-label {
+    font-size: 28rpx;
+    opacity: 0.9;
+}
+
+.time-value {
+    font-size: 36rpx;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+}
+
+.current-activity {
+    border-top: 1rpx solid rgba(255, 255, 255, 0.3);
+    padding-top: 20rpx;
+}
+
+.activity-label {
+    font-size: 24rpx;
+    opacity: 0.8;
+    display: block;
+    margin-bottom: 10rpx;
+}
+
+.activities-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12rpx;
+}
+
+.activity-info {
+    display: flex;
+    align-items: center;
+    gap: 15rpx;
+    padding: 8rpx 0;
+}
+
+.activity-location-small {
+    font-size: 20rpx;
+    opacity: 0.7;
+    margin-left: auto;
+}
+
+.activity-icon {
+    font-size: 32rpx;
+}
+
+.activity-project {
+    font-size: 30rpx;
+    font-weight: 600;
+}
+
+/* 时间线标题 */
+.timeline-header {
+    text-align: center;
+    margin-bottom: 40rpx;
+}
+
+.timeline-title {
+    display: block;
+    font-size: 36rpx;
+    font-weight: bold;
+    color: #be185d;
+    margin-bottom: 8rpx;
+}
+
+.timeline-subtitle {
+    display: block;
+    font-size: 24rpx;
+    color: #9ca3af;
+    font-style: italic;
+}
+
+/* 时间线内容 */
+.timeline-content {
+    position: relative;
+    padding-left: 40rpx;
+}
+
+.timeline-line {
+    position: absolute;
+    left: 20rpx;
+    top: 0;
+    bottom: 0;
+    width: 4rpx;
+    background: linear-gradient(to bottom, #f3e8ff, #e9d5ff, #d8b4fe, #c084fc);
+    border-radius: 2rpx;
+}
+
+/* 时间线项目 */
+.timeline-item {
+    position: relative;
+    margin-bottom: 40rpx;
+    transition: all 0.3s ease;
+}
+
+.timeline-item:last-child {
+    margin-bottom: 0;
+}
+
+/* 时间点 */
+.timeline-dot {
+    position: absolute;
+    left: -40rpx;
+    top: 30rpx;
+    width: 40rpx;
+    height: 40rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dot-inner {
+    width: 20rpx;
+    height: 20rpx;
+    border-radius: 50%;
+    background: #e5e7eb;
+    border: 4rpx solid white;
+    box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.dot-pulse {
+    position: absolute;
+    width: 40rpx;
+    height: 40rpx;
+    border-radius: 50%;
+    background: rgba(236, 72, 153, 0.3);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* 活动卡片 */
+.activity-card {
+    background: white;
+    border-radius: 16rpx;
+    padding: 24rpx;
+    box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+    border: 2rpx solid transparent;
+    transition: all 0.3s ease;
+}
+
+.activity-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16rpx;
+}
+
+.activity-time-location {
+    flex: 1;
+}
+
+.activity-time {
+    display: block;
+    font-size: 28rpx;
+    font-weight: bold;
+    color: #6b7280;
+    font-family: 'Courier New', monospace;
+    margin-bottom: 8rpx;
+}
+
+.activity-location {
+    display: block;
+    font-size: 24rpx;
+    color: #9ca3af;
+    font-weight: 500;
+}
+
+.activity-icon-large {
+    font-size: 32rpx;
+    margin-left: 20rpx;
+}
+
+.activity-body {
+    margin-bottom: 16rpx;
+}
+
+.activity-project-text {
+    display: block;
+    font-size: 32rpx;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 8rpx;
+}
+
+.activity-content {
+    display: block;
+    font-size: 26rpx;
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+/* 备注信息 */
+.activity-remarks {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border-radius: 12rpx;
+    padding: 16rpx;
+    margin-bottom: 16rpx;
+    border-left: 4rpx solid #f59e0b;
+}
+
+.remarks-label {
+    display: block;
+    font-size: 24rpx;
+    font-weight: bold;
+    color: #92400e;
+    margin-bottom: 6rpx;
+}
+
+.remarks-text {
+    display: block;
+    font-size: 24rpx;
+    color: #78350f;
+    line-height: 1.4;
+}
+
+/* 状态指示器 */
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8rpx;
+}
+
+.status-dot {
+    width: 12rpx;
+    height: 12rpx;
+    border-radius: 50%;
+}
+
+.status-dot.pending {
+    background: #d1d5db;
+}
+
+.status-dot.current {
+    background: #ec4899;
+    animation: blink 1.5s infinite;
+}
+
+.status-dot.completed {
+    background: #10b981;
+}
+
+@keyframes blink {
+
+    0%,
+    50% {
+        opacity: 1;
+    }
+
+    51%,
+    100% {
+        opacity: 0.5;
+    }
+}
+
+.status-text {
+    font-size: 24rpx;
+    color: #6b7280;
+}
+
+/* 状态样式 */
+.timeline-item.pending .dot-inner {
+    background: #d1d5db;
+}
+
+.timeline-item.current .dot-inner {
+    background: #ec4899;
+    box-shadow: 0 0 20rpx rgba(236, 72, 153, 0.4);
+}
+
+.timeline-item.completed .dot-inner {
+    background: #10b981;
+}
+
+.timeline-item.current .activity-card {
+    border-color: #ec4899;
+    box-shadow: 0 8rpx 32rpx rgba(236, 72, 153, 0.15);
+    transform: translateY(-4rpx);
+}
+
+.timeline-item.completed .activity-card {
+    border-color: #10b981;
+    opacity: 0.8;
+}
+
+/* 底部装饰 */
+.timeline-footer {
+    text-align: center;
+    margin-top: 40rpx;
+    padding: 30rpx;
+}
+
+.footer-text {
+    font-size: 26rpx;
+    color: #9ca3af;
+    font-style: italic;
+}
+
+/* 响应式设计 */
+@media (max-width: 750rpx) {
+    .timeline-container {
+        padding: 15rpx;
+    }
+
+    .current-time-section {
+        padding: 20rpx;
+    }
+
+    .activity-card {
+        padding: 20rpx;
+    }
+
+    .timeline-content {
+        padding-left: 30rpx;
+    }
+
+    .timeline-dot {
+        left: -30rpx;
+    }
+
+    .activity-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .activity-icon-large {
+        margin-left: 0;
+        margin-top: 10rpx;
+    }
+}

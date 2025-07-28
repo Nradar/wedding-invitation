@@ -37,6 +37,15 @@
     align-items: center;
 }
 
+.phone-margin {
+  margin-bottom: 36rpx;
+}
+
+.phone-btn {
+  border-radius: 0 0rpx 0rpx 0 !important;
+  border-right: 1rpx solid #ddd !important;
+}
+
 .phone {
     background-color: rgba(133, 22, 14, .9);
     border-radius: 20rpx;
@@ -58,6 +67,55 @@
     background-color: rgba(133, 22, 14, 1);
 }
 
+.qr-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.qr-container {
+  background: #ffffff;
+  padding: 24rpx;
+  border-radius: 20rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.qr-tip {
+  white-space: pre-line;
+  text-align: center;
+  font-size: 26rpx;
+  color: #666;
+  margin-top: 16rpx;
+  font-weight: 600;
+}
+
+.qr-modal-close-container{
+  padding: 24rpx;
+}
+
+.qr-modal-close-btn {
+  background-color: rgb(223, 223, 223);
+  color: #333;
+}
+
+.qr-modal-close-btn:hover {
+  background-color: rgb(200, 200, 200);
+}
+
+.wechatqr-icon {
+  width: 32rpx;
+  height: 32rpx;
+}
+
 .phone-icon {
     width: 32rpx;
     height: 32rpx;
@@ -65,7 +123,6 @@
 
 .call-item {
     background-color: #eee;
-    border-radius: 20rpx;
     padding-left: 40rpx;
     overflow: hidden;
     height: 70rpx;

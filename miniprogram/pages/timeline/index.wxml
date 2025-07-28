@@ -1,0 +1,25 @@
+<view class="timeline-demo">
+    <!-- 页面标题 -->
+    <view class="demo-header">
+        <text class="demo-title">婚礼时间线</text>
+        <text class="demo-subtitle">Wedding Timeline</text>
+    </view>
+    <!-- 控制面板 -->
+    <view class="control-panel">
+        <view class="control-item">
+            <text class="control-label">婚礼日期:</text>
+            <text class="control-value">{{weddingDate}}</text>
+            <!-- <button class="control-btn" bindtap="setWeddingDate">设置日期</button> -->
+        </view>
+        <view class="control-item">
+            <text class="control-label">显示当前活动:</text>
+            <switch class="control-switch" checked="{{showCurrentActivity}}" bindchange="toggleCurrentActivity" />
+        </view>
+        <!-- <view class="control-item">
+            <text class="control-label">测试状态:</text>
+            <text class="control-value">选择不同日期测试各种状态</text>
+        </view> -->
+    </view>
+    <!-- 时间线组件 -->
+    <timeline wedding-date="{{weddingDate}}" show-current-activity="{{showCurrentActivity}}" activities="{{activities}}" bind:activitytap="onActivityTap" bind:statusupdate="onStatusUpdate" />
+</view>
