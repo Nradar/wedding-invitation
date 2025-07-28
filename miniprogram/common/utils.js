@@ -24,3 +24,12 @@ exports.getMonthDayCount = (year, month) => {
     }
     return [31, isLeapYear ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][month - 1]
 }
+
+exports.getDateStringInTimeZone = (date, timeZone) => {
+  return new Intl.DateTimeFormat('en-CA', {
+    timeZone,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }).format(date);
+}

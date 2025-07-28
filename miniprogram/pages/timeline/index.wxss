@@ -1,0 +1,85 @@
+/* 演示页面容器 */
+.timeline-demo {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+}
+
+/* 演示页面标题 */
+.demo-header {
+    text-align: center;
+    padding: 40rpx 20rpx 20rpx;
+    background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+    color: white;
+}
+
+.demo-title {
+    display: block;
+    font-size: 40rpx;
+    font-weight: bold;
+    margin-bottom: 8rpx;
+}
+
+.demo-subtitle {
+    display: block;
+    font-size: 26rpx;
+    opacity: 0.9;
+    font-style: italic;
+}
+
+/* 控制面板 */
+.control-panel {
+    background: white;
+    margin: 20rpx;
+    border-radius: 16rpx;
+    padding: 30rpx;
+    box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.control-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30rpx;
+    padding-bottom: 20rpx;
+    border-bottom: 1rpx solid #f3f4f6;
+}
+
+.control-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.control-label {
+    font-size: 28rpx;
+    color: #374151;
+    font-weight: 500;
+}
+
+.control-value {
+    font-size: 26rpx;
+    color: #6b7280;
+    font-family: 'Courier New', monospace;
+    background: #f9fafb;
+    padding: 8rpx 16rpx;
+    border-radius: 8rpx;
+    margin: 0 20rpx;
+}
+
+.control-btn {
+    background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+    color: white;
+    border: none;
+    border-radius: 8rpx;
+    padding: 12rpx 24rpx;
+    font-size: 24rpx;
+    min-width: 120rpx;
+}
+
+.control-btn::after {
+    border: none;
+}
+
+.control-switch {
+    transform: scale(0.8);
+}

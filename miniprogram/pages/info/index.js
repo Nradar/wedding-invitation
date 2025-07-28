@@ -148,5 +148,12 @@ Page({
             title: '婚礼公告栏',
             imageUrl: '../../images/infoPoster.jpg'
         }
-    }
+    },
+
+    //活动时间轴
+    goTimeline() {
+      wx.navigateTo({
+          url: '../timeline/index'
+      })
+  }
 })

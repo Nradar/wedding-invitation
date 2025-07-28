@@ -1,0 +1,94 @@
+<view class="timeline-container">
+    <!-- 当前时间显示 -->
+    <view class="current-time-section" wx:if="{{isWeddingDay}}">
+        <view class="current-time">
+            <text class="time-label">当前时间</text>
+            <text class="time-value">{{currentTime}}</text>
+        </view>
+        <view class="current-activity" wx:if="{{currentActivity && showCurrentActivity}}">
+            <text class="activity-label">正在进行</text>
+            <view class="activities-list">
+                <view class="activity-info" wx:for="{{currentActivity}}" wx:key="id">
+                    <text class="activity-icon">{{item.icon}}</text>
+                    <text class="activity-project">{{item.project}}</text>
+                    <text class="activity-location-small">📍 {{item.location}}</text>
+                </view>
+            </view>
+        </view>
+    </view>
+    <!-- 婚礼倒计时显示 -->
+    <view class="wedding-countdown-section" wx:if="{{isWeddingUpcoming}}">
+        <view class="countdown-icon">💒</view>
+        <view class="countdown-title">距离我们的婚礼还有</view>
+        <view class="countdown-days">
+            <text class="days-number">{{daysUntilWedding}}</text>
+            <text class="days-text">天</text>
+        </view>
+        <view class="countdown-message">
+            <text>💕 期待与您共度美好时光 💕</text>
+        </view>
+    </view>
+    <!-- 婚礼已结束显示 -->
+    <view class="wedding-ended-section" wx:if="{{isWeddingPassed}}">
+        <view class="ended-icon">🎉</view>
+        <view class="ended-title">婚礼已圆满结束</view>
+        <view class="ended-subtitle">感谢所有宾客的参与和祝福</view>
+        <view class="ended-message">
+            <text>💕 愿我们的爱情如时间般永恒 💕</text>
+        </view>
+    </view>
+    <!-- 时间线标题 -->
+    <view class="timeline-header">
+        <text class="timeline-title" wx:if="{{isWeddingUpcoming}}">婚礼倒计时</text>
+        <text class="timeline-title" wx:elif="{{isWeddingDay}}">婚礼日程安排</text>
+        <text class="timeline-title" wx:else>婚礼回忆录</text>
+        <text class="timeline-subtitle" wx:if="{{isWeddingUpcoming}}">Wedding Countdown</text>
+        <text class="timeline-subtitle" wx:elif="{{isWeddingDay}}">Wedding Timeline</text>
+        <text class="timeline-subtitle" wx:else>Wedding Memories</text>
+    </view>
+    <!-- 时间线内容 -->
+    <view class="timeline-content">
+        <view class="timeline-line"></view>
+        <view class="timeline-item {{item.status}}" wx:for="{{activities}}" wx:key="id" data-id="{{item.id}}" bindtap="onActivityTap">
+            <!-- 时间点 -->
+            <view class="timeline-dot">
+                <view class="dot-inner"></view>
+                <view class="dot-pulse" wx:if="{{item.status === 'current'}}"></view>
+            </view>
+            <!-- 活动内容 -->
+            <view class="activity-card">
+                <view class="activity-header">
+                    <view class="activity-time-location">
+                        <text class="activity-time">
+                            {{item.startTime || item.time}} - {{item.endTime || '02:00'}}
+                        </text>
+                        <text class="activity-location">📍 {{item.location}}</text>
+                    </view>
+                    <text class="activity-icon-large">{{item.icon}}</text>
+                </view>
+                <view class="activity-body">
+                    <text class="activity-project-text">{{item.project}}</text>
+                    <text class="activity-content">{{item.content}}</text>
+                </view>
+                <!-- 备注信息 -->
+                <view class="activity-remarks" wx:if="{{item.remarks}}">
+                    <text class="remarks-label">💡 备注:</text>
+                    <text class="remarks-text">{{item.remarks}}</text>
+                </view>
+                <!-- 状态指示器 -->
+                <view class="status-indicator">
+                    <view class="status-dot {{item.status}}"></view>
+                    <text class="status-text">
+                        <text wx:if="{{item.status === 'pending'}}">待进行</text>
+                        <text wx:elif="{{item.status === 'current'}}">进行中</text>
+                        <text wx:elif="{{item.status === 'completed'}}">已完成</text>
+                    </text>
+                </view>
+            </view>
+        </view>
+    </view>
+    <!-- 底部装饰 -->
+    <view class="timeline-footer" wx:if="{{!isWeddingPassed}}">
+        <text class="footer-text">💕 愿你们的爱情如时间般永恒 💕</text>
+    </view>
+</view>
