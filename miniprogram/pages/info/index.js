@@ -10,6 +10,8 @@ const {
 
 Page({
     data: {
+        showQrModal: false,
+        currentQr: '',
         // 新郎新娘联系方式
         couple,
 
@@ -20,19 +22,27 @@ Page({
 
         // 其余人员联系方式
         phone: [{
-            name: '伴郎：XXX',
-            number: 'XXXXXXXXXXX'
+            name: '伴郎：陈天昊',
+            number: 'XXXXXXXXXXX',
+            wechatQr: 'cloud://cloudbase-4gj6t13x12b6fc4b.636c-cloudbase-4gj6t13x12b6fc4b-1371179587/wechatQRCode/qrtest.jpg'
         }, {
-            name: '伴娘：XXX',
+            name: '伴郎：三毛',
+            number: 'XXXXXXXXXXX',
+            wechatQr: 'cloud://cloudbase-4gj6t13x12b6fc4b.636c-cloudbase-4gj6t13x12b6fc4b-1371179587/wechatQRCode/qrtest.jpg'
+        }, {
+            name: '伴娘：樊依娴',
+            number: 'XXXXXXXXXXX'
+        },{
+            name: '伴娘：程宇',
             number: 'XXXXXXXXXXX'
         }],
 
         // 定位信息（通过页面上的「选择位置并获取定位信息」按钮可以获取定位信息，发布前记得把按钮注释起来）
         location: genLocation([{
-            name: '婚宴酒店：XXXXXXXX',
-            address: '详细地址XXXXXXXXXXXXXXX',
-            latitude: 23.03387641906739,
-            longitude: 113.7241439819336
+            name: '婚宴地址：格乐利雅GALLERIA艺术中心(大宁店)',
+            address: '详细地址：上海市静安区汶水路40号',
+            latitude: 31.2942468,
+            longitude: 121.4590051
         }]),
 
         // PDF资料（在云开发的「存储」里上传文件，就可以得到fileID了）
@@ -50,6 +60,22 @@ Page({
             '兄弟团先去洗头做发型再到我家集合，尽量8点半前到，实在有事的话最晚9点到，兄弟们把控好时间哈，辛苦大家',
             '最后的最后，文明接亲，欢乐接亲，希望大家多多配合，有什么需要，请联系帅气的新郎哥和美丽的新娘子，如有疏漏，请多多包涵'
         ]
+    },
+
+    //QRCode Modal
+    showQRCode(e) {
+      const qr = e.currentTarget.dataset.qr
+      this.setData({
+        showQrModal: true,
+        currentQr: qr
+      })
+    },
+    
+    hideQRCode() {
+      this.setData({
+        showQrModal: false,
+        currentQr: ''
+      })
     },
 
     // 呼叫

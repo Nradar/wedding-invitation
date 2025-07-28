@@ -21,13 +21,15 @@ App({
             name: '赵天成', // 姓名
             alias: '新郎', // 称谓
             number: 'XXXXXXXXXXX', // 手机号码
-            birthday: '1994.06.16' // 出生日期
+            birthday: '1994.06.16', // 出生日期
+            wechatQr: 'cloud://cloudbase-4gj6t13x12b6fc4b.636c-cloudbase-4gj6t13x12b6fc4b-1371179587/wechatQRCode/赵天成qrcode.jpg'
         }, {
             image: 'https://res.wx.qq.com/t/fed_upload/e4ddf6ce-990c-45b1-b4e9-bdf6a6b498ac/wife.jpg', // 新娘单人照
             name: '王昕婷', // 姓名
             alias: '新娘', // 称谓
             number: 'XXXXXXXXXXX', // 手机号码
-            birthday: '1998.03.22' // 出生日期
+            birthday: '1998.03.22', // 出生日期
+            wechatQr: 'cloud://cloudbase-4gj6t13x12b6fc4b.636c-cloudbase-4gj6t13x12b6fc4b-1371179587/wechatQRCode/王昕婷qrcode.jpg'
         }],
 
         // 发布者（自己想个你俩人的噱头组合名呗）
