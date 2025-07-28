@@ -1,6 +1,6 @@
 {
     "navigationBarTitleText": "婚礼时间线",
-    "navigationBarBackgroundColor": "#ec4899",
+    "navigationBarBackgroundColor": "#e8b4b8",
     "navigationBarTextStyle": "white",
     "usingComponents": {
         "timeline": "../../components/timeline/timeline"

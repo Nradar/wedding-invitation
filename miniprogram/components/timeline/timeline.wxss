@@ -1,27 +1,27 @@
 /* 时间线容器 */
 .timeline-container {
     padding: 20rpx;
-    background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+    background: linear-gradient(135deg, #faf8f6 0%, #f7f3f0 100%);
     min-height: 100vh;
 }
 
 /* 当前时间区域 */
 .current-time-section {
-    background: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+    background: linear-gradient(135deg, #d4a574 0%, #c19660 100%);
     border-radius: 20rpx;
     padding: 30rpx;
     margin-bottom: 30rpx;
-    box-shadow: 0 8rpx 32rpx rgba(236, 72, 153, 0.3);
+    box-shadow: 0 8rpx 32rpx rgba(212, 165, 116, 0.3);
     color: white;
 }
 
 /* 婚礼倒计时区域 */
 .wedding-countdown-section {
-    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    background: linear-gradient(135deg, #e8b4b8 0%, #d4a0a4 100%);
     border-radius: 20rpx;
     padding: 40rpx 30rpx;
     margin-bottom: 30rpx;
-    box-shadow: 0 8rpx 32rpx rgba(139, 92, 246, 0.3);
+    box-shadow: 0 8rpx 32rpx rgba(232, 180, 184, 0.3);
     color: white;
     text-align: center;
 }
@@ -68,11 +68,11 @@
 
 /* 婚礼已结束区域 */
 .wedding-ended-section {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    background: linear-gradient(135deg, #c4a484 0%, #b8956f 100%);
     border-radius: 20rpx;
     padding: 40rpx 30rpx;
     margin-bottom: 30rpx;
-    box-shadow: 0 8rpx 32rpx rgba(16, 185, 129, 0.3);
+    box-shadow: 0 8rpx 32rpx rgba(196, 164, 132, 0.3);
     color: white;
     text-align: center;
 }
@@ -188,14 +188,14 @@
     display: block;
     font-size: 36rpx;
     font-weight: bold;
-    color: #be185d;
+    color: #8b5a5d;
     margin-bottom: 8rpx;
 }
 
 .timeline-subtitle {
     display: block;
     font-size: 24rpx;
-    color: #9ca3af;
+    color: #6b7280;
     font-style: italic;
 }
 
@@ -211,7 +211,7 @@
     top: 0;
     bottom: 0;
     width: 4rpx;
-    background: linear-gradient(to bottom, #f3e8ff, #e9d5ff, #d8b4fe, #c084fc);
+    background: linear-gradient(to bottom, #f5e6e8, #edd5d8, #e4c4c8, #d4a0a4);
     border-radius: 2rpx;
 }
 
@@ -253,7 +253,7 @@
     width: 40rpx;
     height: 40rpx;
     border-radius: 50%;
-    background: rgba(236, 72, 153, 0.3);
+    background: rgba(232, 180, 184, 0.3);
     animation: pulse 2s infinite;
 }
 
@@ -294,7 +294,7 @@
     display: block;
     font-size: 28rpx;
     font-weight: bold;
-    color: #6b7280;
+    color: #374151;
     font-family: 'Courier New', monospace;
     margin-bottom: 8rpx;
 }
@@ -302,7 +302,7 @@
 .activity-location {
     display: block;
     font-size: 24rpx;
-    color: #9ca3af;
+    color: #6b7280;
     font-weight: 500;
 }
 
@@ -319,38 +319,38 @@
     display: block;
     font-size: 32rpx;
     font-weight: bold;
-    color: #1f2937;
+    color: #111827;
     margin-bottom: 8rpx;
 }
 
 .activity-content {
     display: block;
     font-size: 26rpx;
-    color: #6b7280;
+    color: #374151;
     line-height: 1.5;
 }
 
 /* 备注信息 */
 .activity-remarks {
-    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    background: linear-gradient(135deg, #fdf6f0 0%, #faf0e6 100%);
     border-radius: 12rpx;
     padding: 16rpx;
     margin-bottom: 16rpx;
-    border-left: 4rpx solid #f59e0b;
+    border-left: 4rpx solid #d4a574;
 }
 
 .remarks-label {
     display: block;
     font-size: 24rpx;
     font-weight: bold;
-    color: #92400e;
+    color: #7c2d12;
     margin-bottom: 6rpx;
 }
 
 .remarks-text {
     display: block;
     font-size: 24rpx;
-    color: #78350f;
+    color: #9a3412;
     line-height: 1.4;
 }
 
@@ -372,12 +372,12 @@
 }
 
 .status-dot.current {
-    background: #ec4899;
+    background: #e8b4b8;
     animation: blink 1.5s infinite;
 }
 
 .status-dot.completed {
-    background: #10b981;
+    background: #d4a574;
 }
 
 @keyframes blink {
@@ -395,7 +395,7 @@
 
 .status-text {
     font-size: 24rpx;
-    color: #6b7280;
+    color: #374151;
 }
 
 /* 状态样式 */
@@ -404,22 +404,22 @@
 }
 
 .timeline-item.current .dot-inner {
-    background: #ec4899;
-    box-shadow: 0 0 20rpx rgba(236, 72, 153, 0.4);
+    background: #e8b4b8;
+    box-shadow: 0 0 20rpx rgba(232, 180, 184, 0.4);
 }
 
 .timeline-item.completed .dot-inner {
-    background: #10b981;
+    background: #d4a574;
 }
 
 .timeline-item.current .activity-card {
-    border-color: #ec4899;
-    box-shadow: 0 8rpx 32rpx rgba(236, 72, 153, 0.15);
+    border-color: #e8b4b8;
+    box-shadow: 0 8rpx 32rpx rgba(232, 180, 184, 0.15);
     transform: translateY(-4rpx);
 }
 
 .timeline-item.completed .activity-card {
-    border-color: #10b981;
+    border-color: #d4a574;
     opacity: 0.8;
 }
 
@@ -432,7 +432,7 @@
 
 .footer-text {
     font-size: 26rpx;
-    color: #9ca3af;
+    color: #6b7280;
     font-style: italic;
 }
 
