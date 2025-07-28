@@ -54,10 +54,10 @@ Page({
 
         // 酒店信息（通过页面上的「选择位置并获取定位信息」按钮可以获取定位信息，发布前记得把按钮注释起来）
         location: genLocation([{
-            name: '婚宴酒店名XXXXXXXX',
-            address: '详细地址XXXXXXXXXXXXXXX',
-            latitude: 23.03387641906739,
-            longitude: 113.7241439819336
+            name: '婚宴地址：格乐利雅GALLERIA艺术中心(大宁店)',
+            address: '详细地址：上海市静安区汶水路40号',
+            latitude: 31.2942468,
+            longitude: 121.4590051
         }])[0],
 
         // 图片信息（其实就是婚纱照了）

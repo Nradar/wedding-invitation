@@ -89,6 +89,6 @@
     </view>
     <!-- 底部装饰 -->
     <view class="timeline-footer" wx:if="{{!isWeddingPassed}}">
-        <text class="footer-text">💕 愿你们的爱情如时间般永恒 💕</text>
+        <text class="footer-text">💕 愿我们的爱情如时间般永恒 💕</text>
     </view>
 </view>

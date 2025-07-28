@@ -23,12 +23,12 @@ Page({
         // 其余人员联系方式
         phone: [{
             name: '伴郎：陈天昊',
-            number: 'XXXXXXXXXXX',
+            number: '15021307600',
             wechatQr: 'cloud://cloudbase-4gj6t13x12b6fc4b.636c-cloudbase-4gj6t13x12b6fc4b-1371179587/wechatQRCode/qrtest.jpg'
         }, {
-            name: '伴郎：三毛',
+            name: '伴郎：陈树一',
             number: 'XXXXXXXXXXX',
-            wechatQr: 'cloud://cloudbase-4gj6t13x12b6fc4b.636c-cloudbase-4gj6t13x12b6fc4b-1371179587/wechatQRCode/qrtest.jpg'
+            wechatQr: 'cloud://cloudbase-4gj6t13x12b6fc4b.636c-cloudbase-4gj6t13x12b6fc4b-1371179587/wechatQRCode/陈树一qrcode.jpg'
         }, {
             name: '伴娘：樊依娴',
             number: 'XXXXXXXXXXX'

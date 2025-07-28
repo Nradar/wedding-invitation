@@ -1,6 +1,6 @@
 Page({
     data: {
-        weddingDate: '2025-07-28', // 示例婚礼日期
+        weddingDate: '2025-09-20', // 示例婚礼日期
         showCurrentActivity: true,
         activities: [
             {

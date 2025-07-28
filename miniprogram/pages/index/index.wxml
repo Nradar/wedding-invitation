@@ -195,7 +195,7 @@
     <view class="location-mask" bindtap="openLocation"></view>
 
     <!-- 仅用于获取定位信息，获取后会打印到控制台并写入到粘贴板，正式发布时记得注释起来 -->
-    <button type="primary" size="mini" bindtap="chooseLocation">选择位置并获取定位信息</button>
+    <!-- <button type="primary" size="mini" bindtap="chooseLocation">选择位置并获取定位信息</button> -->
 </view>
 
 <view class="phone mb100">
@@ -253,20 +253,19 @@
 <!-- 彩蛋板块视乎个人情况决定要不要 -->
 <view wx:if="{{ showEggs }}" class="egg tc">
     <view class="egg-title">彩蛋<image src="../../images/icon/egg.png" mode="aspectFit" /></view>
-    <view class="mb28">该小程序由新郎哥本人（也就是我了😎）独立完成开发，如有雷同，没错，我参考了婚贝上的一个模板，但是又不想付费，所以就干脆自己写一个，需要的小伙伴可以找我要源码哦😝</view>
-    <view class="mb28">最后是喜闻乐见的撒狗粮环节✿✿ヽ(°▽°)ノ✿，首先出场的是我们的求婚视频☺️</view>
+    <view class="mb28">该小程序由新郎新娘本人😎独立完成开发，如有雷同，没错，我参考了git上的一个模板，需要的小伙伴可以找我要源码哦😝</view>
 
     <!-- 如果要加视频号的话可以用我封装好的channel组件，小程序个人号也能使用视频号卡片样式，参数和官方提供的channel-video基本一致 -->
-    <view class="mb58">
+    <!-- <view class="mb58">
         <channel finder-user-name="sphnQSkTBRwbRTK" feed-id="export/UzFfAgtgekIEAQAAAAAAPvkpzoO6XwAAAAstQy6ubaLX4KHWvLEZgBPE8YMMHW0eXf-HzNPgMJoermBiWqs9f6R0EzJgYBR1" poster="https://res.wx.qq.com/t/fed_upload/3da3dcc4-0add-4fb7-981f-587b291c1c69/propose.jpg" nickname="Jamin"></channel>
-    </view>
+    </view> -->
 
-    <view class="mb28">然后当然少不了我们在苗寨拍的艺术照啦哈哈哈哈😄</view>
+    <!-- <view class="mb28">然后当然少不了我们在苗寨拍的艺术照啦哈哈哈哈😄</view> -->
 
     <!-- 如果要加视频号的话可以用我封装好的channel组件，小程序个人号也能使用视频号卡片样式，参数和官方提供的channel-video基本一致 -->
-    <view class="mb58">
+    <!-- <view class="mb58">
         <channel finder-user-name="sphnQSkTBRwbRTK" feed-id="export/UzFfAgtgekIEAQAAAAAAQCYj8jTRuAAAAAstQy6ubaLX4KHWvLEZgBPEwYN4ax0BbeKGzNPgMJoI4A03G3e3pJIH4mc7mzaX" poster="https://res.wx.qq.com/t/fed_upload/afdf01f1-13a2-431c-97ce-5af931731df4/artistic.jpeg" nickname="Jamin"></channel>
-    </view>
+    </view> -->
 
     <view class="mb28">好啦，狗粮撒到这里就差不多啦，剩下的我们留到婚礼上再呈现给大家吧，我们婚礼上见哦~💒👫🏻</view>
     <view>未完，待续</view>
