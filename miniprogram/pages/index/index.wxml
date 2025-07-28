@@ -47,10 +47,11 @@
 <view class="tc lh21 mb100">
     <image class="img-introduce" src="https://h5cdn.hunbei.com/editorCustomPic/2022-8-22-WNhBXi3ty4fw7dwFBxSZneDKYtz754ya.png?imageMogr2/auto-orient/thumbnail/542.00x58.84>" mode="aspectFit" />
     <view class="moon">
-        <image class="img-moon" src="https://h5cdn.hunbei.com/editorCustomPic/2022-2-16-6xEP56tzDiPX53f4WZbAYR3pmwAZB7M7.png?imageMogr2/auto-orient/thumbnail/310.00x465.00>" mode="aspectFit" />
-        <image class="img-moon" src="https://h5cdn.hunbei.com/editorCustomPic/2022-2-16-TaHn8RGyJTdcwF5HGPkxrrifeFPNmPek.png?imageMogr2/auto-orient/thumbnail/310.00x464.11>" mode="aspectFit" />
+        <image class="img-moon" src="cloud://cloudbase-4gj6t13x12b6fc4b.636c-cloudbase-4gj6t13x12b6fc4b-1371179587/images/moon_1998.png" mode="aspectFit" />
+        <image class="img-moon" src="cloud://cloudbase-4gj6t13x12b6fc4b.636c-cloudbase-4gj6t13x12b6fc4b-1371179587/images/moon_1994.png" mode="aspectFit" />
         <view class="birthday">
-            <text wx:for="{{ couple }}" wx:key="name">{{ item.birthday }}</text>
+            <text>1998.03.22</text>
+            <text>1994.06.16</text>
         </view>
     </view>
     <view>出生时的月亮</view>
@@ -62,26 +63,26 @@
     <image class="img-husband" src="{{ imgs.husband }}" mode="aspectFit" />
     <view class="husband-desc">
       <view>/</view>
-      <view>翩然如风，心若琉璃</view>
-      <view>一笑解霜雪，万象皆春</view>
+      <view>他是一次跃迁</view>
+      <view>将热源投向寂静的维度</view>
+      <view>像光，不问归途</view>
     </view>
 </view>
 
 <view class="wife lh21 mb100">
     <view class="wife-desc">
-        <view>/</view>
-        <view>{{ anniversary }}</view>
-        <view>一见钟情</view>
-        <view>是灵魂认出了你</view>
+      <view>/</view>
+      <view>她是无声的引力</view>
+      <view>在时间之外自洽</view>
+      <view>终将奔赴她所热爱的</view>
     </view>
     <image class="img-wife" src="{{ imgs.wife }}" mode="aspectFit" />
 </view>
 
 <view class="tc lh21 mb100">
-    <view>我常常觉得也许这辈子</view>
-    <view>不会得到所谓的爱情了</view>
-    <view>直到</view>
-    <view>你出现了</view>
+  <view>我一度以为，浪漫不属于现实</view>
+  <view>直到你用平凡的每一天</view>
+  <view>让我相信它是真的</view>
 </view>
 
 <view class="tc lh21 mb100">
@@ -223,7 +224,7 @@
 
 <view class="tc lh21 mb100">
     <image class="img-separate mb100" src="https://h5cdn.hunbei.com/editorCustomPic/2022-1-26-rx4ZZi3KdMErdNk4E2X3EHh3EiB3bPdY.gif?imageMogr2/auto-orient/thumbnail/864x27>" mode="aspectFit" />
-    <image class="img-full-width mb100" src="{{ imgs.end1 }}" mode="widthFix" />
+    <!-- <image class="img-full-width mb100" src="{{ imgs.end1 }}" mode="widthFix" /> -->
     <view class="tl">
         <view class="tips">温馨tips：</view>
         <view>请预留好{{ weddingTimeStr[4] }}这一天的行程</view>
@@ -235,7 +236,7 @@
 </view>
 
 <view class="tc lh21 mb152">
-    <image class="img-full-width mb100" src="{{ imgs.end2 }}" mode="widthFix" />
+    <!-- <image class="img-full-width mb100" src="{{ imgs.end2 }}" mode="widthFix" /> -->
     <view class="tr mb100">
         <view>我把我的整个灵魂都给你</view>
         <view>连同它的怪癖</view>

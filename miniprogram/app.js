@@ -17,13 +17,13 @@ App({
 
         // 新郎新娘信息
         couple: [{
-            image: 'https://res.wx.qq.com/t/fed_upload/52557f40-32f9-4b37-9115-eed527e55683/husband.jpg', // 新郎单人照
+            image: 'cloud://cloudbase-4gj6t13x12b6fc4b.636c-cloudbase-4gj6t13x12b6fc4b-1371179587/images/husband_h.jpg', // 新郎单人照
             name: '赵天成', // 姓名
             alias: '新郎', // 称谓
             number: 'XXXXXXXXXXX', // 手机号码
             birthday: '1994.06.16' // 出生日期
         }, {
-            image: 'https://res.wx.qq.com/t/fed_upload/e4ddf6ce-990c-45b1-b4e9-bdf6a6b498ac/wife.jpg', // 新娘单人照
+            image: 'cloud://cloudbase-4gj6t13x12b6fc4b.636c-cloudbase-4gj6t13x12b6fc4b-1371179587/images/wife_h.jpg', // 新娘单人照
             name: '王昕婷', // 姓名
             alias: '新娘', // 称谓
             number: 'XXXXXXXXXXX', // 手机号码
@@ -31,7 +31,7 @@ App({
         }],
 
         // 发布者（自己想个你俩人的噱头组合名呗）
-        publisher: 'Z&W',
+        publisher: 'W&Z',
 
         // 纪念日（如果是一见钟情的话，建议用第一次见面那天）
         anniversary: '2018.03.11'
