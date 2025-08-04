@@ -294,3 +294,8 @@
 <view wx:if="{{ isManager }}" class="manager">
     <image bindtap="goInfo" src="../../images/icon/manager.png" mode="widthFix"/>
 </view>
+
+<!-- 管理员管理入口 - 仅超级管理员可见 -->
+<view wx:if="{{ isSuperAdmin }}" class="admin-manager">
+    <image bindtap="goAdmin" src="../../images/icon/manager.png" mode="widthFix"/>
+</view>

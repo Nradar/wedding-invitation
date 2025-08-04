@@ -1,0 +1,201 @@
+<view class="admin-container">
+    <!-- 头部 -->
+    <view class="header">
+        <view class="header-content">
+            <view class="back-btn" bindtap="goBack">
+                <text class="back-icon">←</text>
+            </view>
+            <view class="title">管理员管理</view>
+            <view class="refresh-btn" bindtap="refreshManagers">
+                <text class="refresh-icon">🔄</text>
+            </view>
+        </view>
+    </view>
+
+    <!-- 权限检查 -->
+    <view wx:if="{{!isSuperAdmin}}" class="no-permission">
+        <text>只有超级管理员可以访问此页面</text>
+    </view>
+
+    <!-- 主要内容 -->
+    <view wx:else class="main-content">
+        <!-- 添加管理员按钮 -->
+        <view class="add-section">
+            <button class="add-btn" bindtap="showUserSelectModal">
+                <text class="add-icon">👥</text>
+                <text>从用户列表选择</text>
+            </button>
+            <button class="add-btn manual-btn" bindtap="showAddManager">
+                <text class="add-icon">+</text>
+                <text>手动添加</text>
+            </button>
+        </view>
+
+        <!-- 管理员列表 -->
+        <view class="managers-list">
+            <view wx:if="{{loading}}" class="loading">
+                <text>加载中...</text>
+            </view>
+            
+            <view wx:elif="{{managers.length === 0}}" class="empty-list">
+                <text>暂无管理员</text>
+            </view>
+            
+            <view wx:else class="manager-items">
+                <view wx:for="{{managers}}" wx:key="openid" class="manager-item">
+                    <view class="manager-info">
+                        <view class="manager-name">
+                            <text class="name">{{item.name || '未命名'}}</text>
+                            <text wx:if="{{item.email}}" class="email">({{item.email}})</text>
+                        </view>
+                        <view class="manager-openid">
+                            <text class="openid-text">{{item.openid}}</text>
+                        </view>
+                        <view class="manager-meta">
+                            <text class="added-time">添加时间: {{item.addedAt}}</text>
+                        </view>
+                    </view>
+                    
+                    <view class="manager-actions">
+                        <button class="edit-btn" data-manager="{{item}}" bindtap="showEditManager">
+                            <text>编辑</text>
+                        </button>
+                        <button class="delete-btn" data-manager="{{item}}" bindtap="deleteManager">
+                            <text>删除</text>
+                        </button>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <!-- 添加管理员模态框 -->
+    <view wx:if="{{showAddModal}}" class="modal-overlay" bindtap="hideAddModal">
+        <view class="modal-content" catchtap="stopPropagation">
+            <view class="modal-header">
+                <text class="modal-title">添加管理员</text>
+                <view class="modal-close" bindtap="hideAddModal">×</view>
+            </view>
+            
+            <view class="modal-body">
+                <view class="form-group">
+                    <text class="form-label">OpenID *</text>
+                    <input class="form-input" 
+                           placeholder="请输入openid" 
+                           value="{{newManager.openid}}"
+                           data-field="openid"
+                           bindinput="onInputChange" />
+                </view>
+                
+                <view class="form-group">
+                    <text class="form-label">姓名</text>
+                    <input class="form-input" 
+                           placeholder="请输入姓名" 
+                           value="{{newManager.name}}"
+                           data-field="name"
+                           bindinput="onInputChange" />
+                </view>
+                
+                <view class="form-group">
+                    <text class="form-label">邮箱</text>
+                    <input class="form-input" 
+                           placeholder="请输入邮箱" 
+                           value="{{newManager.email}}"
+                           data-field="email"
+                           bindinput="onInputChange" />
+                </view>
+            </view>
+            
+            <view class="modal-footer">
+                <button class="cancel-btn" bindtap="hideAddModal">取消</button>
+                <button class="confirm-btn" bindtap="addManager">添加</button>
+            </view>
+        </view>
+    </view>
+
+    <!-- 编辑管理员模态框 -->
+    <view wx:if="{{showEditModal}}" class="modal-overlay" bindtap="hideEditModal">
+        <view class="modal-content" catchtap="stopPropagation">
+            <view class="modal-header">
+                <text class="modal-title">编辑管理员</text>
+                <view class="modal-close" bindtap="hideEditModal">×</view>
+            </view>
+            
+            <view class="modal-body">
+                <view class="form-group">
+                    <text class="form-label">OpenID *</text>
+                    <input class="form-input" 
+                           placeholder="请输入openid" 
+                           value="{{newManager.openid}}"
+                           data-field="openid"
+                           bindinput="onInputChange" />
+                </view>
+                
+                <view class="form-group">
+                    <text class="form-label">姓名</text>
+                    <input class="form-input" 
+                           placeholder="请输入姓名" 
+                           value="{{newManager.name}}"
+                           data-field="name"
+                           bindinput="onInputChange" />
+                </view>
+                
+                <view class="form-group">
+                    <text class="form-label">邮箱</text>
+                    <input class="form-input" 
+                           placeholder="请输入邮箱" 
+                           value="{{newManager.email}}"
+                           data-field="email"
+                           bindinput="onInputChange" />
+                </view>
+            </view>
+            
+            <view class="modal-footer">
+                <button class="cancel-btn" bindtap="hideEditModal">取消</button>
+                <button class="confirm-btn" bindtap="updateManager">更新</button>
+            </view>
+        </view>
+    </view>
+
+    <!-- 用户选择模态框 -->
+    <view wx:if="{{showUserSelectModal}}" class="modal-overlay" bindtap="hideUserSelectModal">
+        <view class="modal-content user-select-modal" catchtap="stopPropagation">
+            <view class="modal-header">
+                <text class="modal-title">选择用户添加为管理员</text>
+                <view class="modal-close" bindtap="hideUserSelectModal">×</view>
+            </view>
+            
+            <view class="modal-body">
+                <view class="user-list">
+                    <view wx:if="{{users.length === 0}}" class="empty-users">
+                        <text>暂无用户数据</text>
+                    </view>
+                    
+                    <view wx:else class="user-items">
+                        <view wx:for="{{users}}" wx:key="openid" class="user-item" data-user="{{item}}" bindtap="selectUser">
+                            <view class="user-info">
+                                <view class="user-name">
+                                    <text class="name">{{item.name}}</text>
+                                    <text class="attendance">(出席人数: {{item.num}})</text>
+                                </view>
+                                <view class="user-greeting" wx:if="{{item.greeting}}">
+                                    <text class="greeting-text">{{item.greeting}}</text>
+                                </view>
+                                <view class="user-openid">
+                                    <text class="openid-text">{{item.openid}}</text>
+                                </view>
+                            </view>
+                            <view class="user-select-indicator">
+                                <text class="select-icon">→</text>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+            
+            <view class="modal-footer">
+                <button class="cancel-btn" bindtap="hideUserSelectModal">取消</button>
+            </view>
+        </view>
+    </view>
+</view> 

@@ -10,6 +10,8 @@ const surveys = db.collection('surveys')
 // 云函数入口函数
 exports.main = async (event, context) => {
     const { OPENID } = cloud.getWXContext()
+
+    // Get greetings
     const collection = await surveys.where({
         greeting: _.not(_.eq(''))
     })

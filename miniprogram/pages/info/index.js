@@ -12,6 +12,7 @@ Page({
     data: {
         showQrModal: false,
         currentQr: '',
+        isManager: false, // 当前用户是否为管理员
         // 新郎新娘联系方式
         couple,
 
@@ -32,7 +33,7 @@ Page({
         }, {
             name: '伴娘：樊依娴',
             number: 'XXXXXXXXXXX'
-        },{
+        }, {
             name: '伴娘：程宇',
             number: 'XXXXXXXXXXX'
         }],
@@ -62,20 +63,66 @@ Page({
         ]
     },
 
+    onLoad() {
+        this.checkManagerStatus()
+    },
+
+    // 检查当前用户是否为管理员
+    checkManagerStatus() {
+        // Get user openid first
+        wx.cloud.callFunction({
+            name: 'greetings'
+        }).then(({ result }) => {
+            const { openid } = result
+            console.log('Current user openid:', openid)
+
+            // Get managers list from managers cloud function
+            wx.cloud.callFunction({
+                name: 'managers',
+                data: {
+                    action: 'getList'
+                }
+            }).then(({ result: managersResult }) => {
+                console.log('Managers result:', managersResult)
+                const managers = managersResult.success ? managersResult.managers : []
+                console.log('Managers list:', managers)
+                console.log('Managers type:', typeof managers)
+                console.log('Managers length:', managers ? managers.length : 'undefined')
+
+                const isManager = managers && Array.isArray(managers) && managers.indexOf(openid) > -1
+                console.log('Is Manager:', isManager)
+
+                this.setData({
+                    isManager
+                })
+            }).catch((error) => {
+                console.error('Error getting managers list:', error)
+                this.setData({
+                    isManager: false
+                })
+            })
+        }).catch((error) => {
+            console.error('Error getting user openid:', error)
+            this.setData({
+                isManager: false
+            })
+        })
+    },
+
     //QRCode Modal
     showQRCode(e) {
-      const qr = e.currentTarget.dataset.qr
-      this.setData({
-        showQrModal: true,
-        currentQr: qr
-      })
+        const qr = e.currentTarget.dataset.qr
+        this.setData({
+            showQrModal: true,
+            currentQr: qr
+        })
     },
-    
+
     hideQRCode() {
-      this.setData({
-        showQrModal: false,
-        currentQr: ''
-      })
+        this.setData({
+            showQrModal: false,
+            currentQr: ''
+        })
     },
 
     // 呼叫
@@ -152,8 +199,10 @@ Page({
 
     //活动时间轴
     goTimeline() {
-      wx.navigateTo({
-          url: '../timeline/index'
-      })
-  }
+        wx.navigateTo({
+            url: '../timeline/index'
+        })
+    },
+
+
 })

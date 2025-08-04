@@ -2,11 +2,7 @@ const {
     genLocation
 } = require('../../common/utils')
 
-// 管理员openid列表，可以在云开发管理页找到，是管理员的话可以看到公告栏页面入口，也可以通过云函数greetings的返回值openid来查看，还可以在本文件getGreetings方法里通过打印openid变量来查看
-const MANAGER = [
-  'oddtMvoHhuv5eumbiFstJ1qA8CbE', //Corn
-  'oddtMvmz7zFsPVqmSpaSddCsIk9A'  //WXT
-]
+// 管理员openid列表现在从云端获取，不再硬编码
 
 const APP = getApp()
 const isRemoved = APP.globalData.isRemoved
@@ -16,6 +12,8 @@ Page({
     data: {
         ...APP.globalData,
         isManager: false, // 当前用户是否为管理员
+        isSuperAdmin: false, // 当前用户是否为超级管理员（Corn）
+        managers: [], // 管理员列表从云端获取
         musicIsPaused: false, // 是否暂停背景音乐
         activeIdx: isRemoved ? 0 : -1, // 祝福语轮播用，当前显示的祝福语索引值
         form: { // 表单信息
@@ -28,7 +26,7 @@ Page({
         // 以上变量都不用动，以下变量是需要手动修改的
 
         // 是否显示彩蛋（由于彩蛋我没有改动，显示的还是我本人的内容，所以我把它默认隐藏起来，方便别人抄作业）
-        showEggs: false,
+        showEggs: true,
 
         // 祝福语列表
         greetings: isRemoved ? [
@@ -76,9 +74,9 @@ Page({
 
             // 轮播图1
             swiper1: [
-              'cloud://cloudbase-4gj6t13x12b6fc4b.636c-cloudbase-4gj6t13x12b6fc4b-1371179587/images/hsz_v_4.jpg',
-              'cloud://cloudbase-4gj6t13x12b6fc4b.636c-cloudbase-4gj6t13x12b6fc4b-1371179587/images/hsz_v_5.jpg',
-              'cloud://cloudbase-4gj6t13x12b6fc4b.636c-cloudbase-4gj6t13x12b6fc4b-1371179587/images/hsz_v_3.jpg'
+                'cloud://cloudbase-4gj6t13x12b6fc4b.636c-cloudbase-4gj6t13x12b6fc4b-1371179587/images/hsz_v_4.jpg',
+                'cloud://cloudbase-4gj6t13x12b6fc4b.636c-cloudbase-4gj6t13x12b6fc4b-1371179587/images/hsz_v_5.jpg',
+                'cloud://cloudbase-4gj6t13x12b6fc4b.636c-cloudbase-4gj6t13x12b6fc4b-1371179587/images/hsz_v_3.jpg'
             ],
 
             // 连续图
@@ -185,7 +183,6 @@ Page({
     // 小程序可见时，拉取祝福语，并设置定时器每20s重新拉取一次祝福语
     onShow() {
         if (!isRemoved) {
-          console.log('here test')
             this.getGreetings()
 
             this.timer === null && (this.timer = setInterval(() => this.getGreetings(), 20000));
@@ -209,16 +206,16 @@ Page({
             // this.music.src = this.data.music.src
             //load music from cloudstorage
             wx.cloud.getTempFileURL({
-              fileList: ['cloud://cloudbase-4gj6t13x12b6fc4b.636c-cloudbase-4gj6t13x12b6fc4b-1371179587/Yoga Lin-Otomen.mp3'],
-              success: res => {
-                this.setData({
-                  'music.src': res.fileList[0].tempFileURL
-                })
-                this.music.src = res.fileList[0].tempFileURL
-              }
+                fileList: ['cloud://cloudbase-4gj6t13x12b6fc4b.636c-cloudbase-4gj6t13x12b6fc4b-1371179587/快魚仔.mp3'],
+                success: res => {
+                    this.setData({
+                        'music.src': res.fileList[0].tempFileURL
+                    })
+                    this.music.src = res.fileList[0].tempFileURL
+                }
             })
-            this.music.loop = false
-            this.music.autoplay = false
+            this.music.loop = true
+            this.music.autoplay = true
         }
     },
 
@@ -368,8 +365,9 @@ Page({
         }
     },
 
-    // 获取祝福语
+    // 获取祝福语和管理员列表
     getGreetings() {
+        // Get greetings
         wx.cloud.callFunction({
             name: 'greetings'
         }).then(({
@@ -378,14 +376,46 @@ Page({
                 openid
             }
         }) => {
-          console.log('当前用户 openid:', openid)
-            const isManager = MANAGER.indexOf(openid) > -1
-            console.log('isManager: ', isManager, greetings.length)
-            this.setData({
-              isManager,
-              greetings,
-              ...(this.data.activeIdx === -1 && greetings.length ? { activeIdx: 0 } : {})
+            console.log('当前用户 openid:', openid)
+
+            // Get managers list separately
+            wx.cloud.callFunction({
+                name: 'managers',
+                data: {
+                    action: 'getList'
+                }
+            }).then(({ result: managersResult }) => {
+                console.log('Managers result:', managersResult)
+                const managers = managersResult.success ? managersResult.managers : []
+                console.log('管理员列表:', managers)
+                console.log('管理员列表类型:', typeof managers)
+                console.log('管理员列表长度:', managers ? managers.length : 'undefined')
+
+                const isManager = managers && Array.isArray(managers) && managers.indexOf(openid) > -1
+                const CORN_OPENID = 'oddtMvoHhuv5eumbiFstJ1qA8CbE'
+                const isSuperAdmin = openid === CORN_OPENID
+                console.log('isManager: ', isManager, 'isSuperAdmin: ', isSuperAdmin, greetings.length)
+
+                this.setData({
+                    isManager,
+                    isSuperAdmin,
+                    managers,
+                    greetings,
+                    ...(this.data.activeIdx === -1 && greetings.length ? { activeIdx: 0 } : {})
+                })
+            }).catch((error) => {
+                console.error('Error getting managers:', error)
+                // Set default values if managers call fails
+                this.setData({
+                    isManager: false,
+                    isSuperAdmin: openid === 'oddtMvoHhuv5eumbiFstJ1qA8CbE',
+                    managers: [],
+                    greetings,
+                    ...(this.data.activeIdx === -1 && greetings.length ? { activeIdx: 0 } : {})
+                })
             })
+        }).catch((error) => {
+            console.error('Error getting greetings:', error)
         })
     },
 
@@ -416,6 +446,145 @@ Page({
     goInfo() {
         wx.navigateTo({
             url: '../info/index'
+        })
+    },
+
+    // 跳转到管理员管理页面（仅超级管理员可见）
+    goAdmin() {
+        if (this.data.isSuperAdmin) {
+            wx.navigateTo({
+                url: '../admin/index'
+            })
+        } else {
+            wx.showToast({
+                title: '无权限访问',
+                icon: 'error'
+            })
+        }
+    },
+
+    // 添加管理员（仅管理员可用）
+    addManager() {
+        if (!this.data.isManager) {
+            wx.showToast({
+                title: '只有管理员才能添加管理员',
+                icon: 'error'
+            })
+            return
+        }
+
+        wx.showModal({
+            title: '添加管理员',
+            content: '请输入要添加的管理员openid',
+            editable: true,
+            placeholderText: '请输入openid',
+            success: (res) => {
+                if (res.confirm && res.content) {
+                    wx.showLoading({
+                        title: '添加中'
+                    })
+                    wx.cloud.callFunction({
+                        name: 'managers',
+                        data: {
+                            action: 'add',
+                            openid: res.content
+                        }
+                    }).then(({ result }) => {
+                        wx.hideLoading()
+                        if (result.success) {
+                            wx.showToast({
+                                title: '添加成功',
+                                icon: 'success'
+                            })
+                            // 重新获取管理员列表
+                            this.getGreetings()
+                        } else {
+                            wx.showToast({
+                                title: result.message || '添加失败',
+                                icon: 'error'
+                            })
+                        }
+                    }).catch((error) => {
+                        wx.hideLoading()
+                        wx.showToast({
+                            title: '添加失败',
+                            icon: 'error'
+                        })
+                        console.error('Add manager error:', error)
+                    })
+                }
+            }
+        })
+    },
+
+    // 移除管理员（仅管理员可用）
+    removeManager() {
+        if (!this.data.isManager) {
+            wx.showToast({
+                title: '只有管理员才能移除管理员',
+                icon: 'error'
+            })
+            return
+        }
+
+        if (this.data.managers.length <= 1) {
+            wx.showToast({
+                title: '至少需要保留一个管理员',
+                icon: 'error'
+            })
+            return
+        }
+
+        const managerList = this.data.managers.map(openid => ({
+            name: openid.substring(0, 8) + '...',
+            value: openid
+        }))
+
+        wx.showActionSheet({
+            itemList: managerList.map(item => item.name),
+            success: (res) => {
+                const selectedOpenid = managerList[res.tapIndex].value
+                wx.showModal({
+                    title: '确认移除',
+                    content: `确定要移除管理员 ${managerList[res.tapIndex].name} 吗？`,
+                    success: (modalRes) => {
+                        if (modalRes.confirm) {
+                            wx.showLoading({
+                                title: '移除中'
+                            })
+                            wx.cloud.callFunction({
+                                name: 'managers',
+                                data: {
+                                    action: 'remove',
+                                    openid: selectedOpenid
+                                }
+                            }).then(({ result }) => {
+                                wx.hideLoading()
+                                if (result.success) {
+                                    wx.showToast({
+                                        title: '移除成功',
+                                        icon: 'success'
+                                    })
+                                    // 重新获取管理员列表
+                                    this.getGreetings()
+                                } else {
+                                    wx.showToast({
+                                        title: result.message || '移除失败',
+                                        icon: 'error'
+                                    })
+                                }
+                            }).catch((error) => {
+                                wx.hideLoading()
+                                wx.showToast({
+                                    title: '移除失败',
+                                    icon: 'error'
+                                })
+                                console.error('Remove manager error:', error)
+                            })
+                        }
+                    }
+                })
+            }
         })
     }
 })

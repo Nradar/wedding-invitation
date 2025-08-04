@@ -1,0 +1,366 @@
+.admin-container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* 头部样式 */
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 20rpx 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30rpx;
+}
+
+.back-btn,
+.refresh-btn {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+}
+
+.back-icon,
+.refresh-icon {
+  font-size: 32rpx;
+  color: white;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+
+/* 权限检查 */
+.no-permission {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60vh;
+  color: #999;
+  font-size: 32rpx;
+}
+
+/* 主要内容 */
+.main-content {
+  padding: 30rpx;
+}
+
+/* 添加管理员按钮 */
+.add-section {
+  margin-bottom: 30rpx;
+}
+
+.add-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 50rpx;
+  padding: 20rpx 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  box-shadow: 0 4rpx 12rpx rgba(102, 126, 234, 0.4);
+}
+
+.add-icon {
+  margin-right: 10rpx;
+  font-size: 36rpx;
+}
+
+/* 管理员列表 */
+.managers-list {
+  background: white;
+  border-radius: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.loading,
+.empty-list {
+  padding: 60rpx;
+  text-align: center;
+  color: #999;
+  font-size: 28rpx;
+}
+
+.manager-items {
+  padding: 0;
+}
+
+.manager-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.manager-item:last-child {
+  border-bottom: none;
+}
+
+.manager-info {
+  flex: 1;
+  margin-right: 20rpx;
+}
+
+.manager-name {
+  margin-bottom: 10rpx;
+}
+
+.name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.email {
+  font-size: 24rpx;
+  color: #666;
+  margin-left: 10rpx;
+}
+
+.manager-openid {
+  margin-bottom: 8rpx;
+}
+
+.openid-text {
+  font-size: 24rpx;
+  color: #999;
+  font-family: monospace;
+}
+
+.manager-meta {
+  font-size: 22rpx;
+  color: #ccc;
+}
+
+.manager-actions {
+  display: flex;
+  gap: 15rpx;
+}
+
+.edit-btn,
+.delete-btn {
+  padding: 12rpx 24rpx;
+  border-radius: 25rpx;
+  font-size: 24rpx;
+  border: none;
+  min-width: 80rpx;
+}
+
+.edit-btn {
+  background: #4caf50;
+  color: white;
+}
+
+.delete-btn {
+  background: #f44336;
+  color: white;
+}
+
+/* 模态框样式 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 20rpx;
+  width: 80%;
+  max-width: 600rpx;
+  max-height: 80vh;
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.modal-close {
+  width: 60rpx;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  color: #999;
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 30rpx;
+}
+
+.form-group {
+  margin-bottom: 30rpx;
+}
+
+.form-label {
+  display: block;
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 15rpx;
+  font-weight: 500;
+}
+
+.form-input {
+  width: 100%;
+  padding: 20rpx;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 10rpx;
+  font-size: 28rpx;
+  background: #fafafa;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  border-color: #667eea;
+  background: white;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 20rpx;
+  padding: 30rpx;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.cancel-btn,
+.confirm-btn {
+  flex: 1;
+  padding: 20rpx;
+  border-radius: 10rpx;
+  font-size: 28rpx;
+  border: none;
+}
+
+.cancel-btn {
+  background: #f5f5f5;
+  color: #666;
+}
+
+.confirm-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+/* 用户选择模态框样式 */
+.user-select-modal {
+  width: 90%;
+  max-width: 700rpx;
+}
+
+.user-list {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.empty-users {
+  text-align: center;
+  padding: 60rpx;
+  color: #999;
+  font-size: 28rpx;
+}
+
+.user-items {
+  padding: 0 20rpx;
+}
+
+.user-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30rpx 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  transition: background-color 0.2s;
+}
+
+.user-item:last-child {
+  border-bottom: none;
+}
+
+.user-item:active {
+  background-color: #f5f5f5;
+}
+
+.user-info {
+  flex: 1;
+  margin-right: 20rpx;
+}
+
+.user-name {
+  margin-bottom: 10rpx;
+}
+
+.user-name .name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.user-name .attendance {
+  font-size: 24rpx;
+  color: #666;
+  margin-left: 10rpx;
+}
+
+.user-greeting {
+  margin-bottom: 8rpx;
+}
+
+.greeting-text {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.4;
+}
+
+.user-openid {
+  margin-bottom: 0;
+}
+
+.user-select-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.select-icon {
+  font-size: 32rpx;
+  color: #2196f3;
+  font-weight: bold;
+}
