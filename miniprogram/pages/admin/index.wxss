@@ -102,6 +102,8 @@
 
 .manager-item {
   display: flex;
+  flex-direction: column;
+  gap: 20px;
   align-items: center;
   justify-content: space-between;
   padding: 30rpx;
@@ -150,6 +152,7 @@
 
 .manager-actions {
   display: flex;
+  width: 90%;
   gap: 15rpx;
 }
 
