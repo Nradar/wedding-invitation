@@ -46,8 +46,8 @@ Page({
         music: {
             // src: 'https://amp3.hunbei.com/mp3/IDo_ChenYiXun.mp3', // 音频资源链接
             src: '',
-            name: 'I DO', // 歌名
-            singer: '陈奕迅' // 歌手名
+            name: '快鱼仔', // 歌名
+            singer: '卢广仲' // 歌手名
         },
 
         // 酒店信息（通过页面上的「选择位置并获取定位信息」按钮可以获取定位信息，发布前记得把按钮注释起来）

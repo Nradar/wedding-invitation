@@ -154,9 +154,37 @@
   margin: 60rpx 0 88rpx 0;
 }
 
+.moon-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .img-moon {
   width: 310rpx;
   height: 460rpx;
+}
+
+.moon-label {
+  position: absolute;
+  top: -20rpx;
+  color: white;
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  z-index: 10;
+}
+
+.husband-moon-label {
+  background: linear-gradient(135deg, #4ecdc4, #44a08d);
+  box-shadow: 0 4rpx 12rpx rgba(78, 205, 196, 0.3);
+}
+
+.wife-moon-label {
+  background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+  box-shadow: 0 4rpx 12rpx rgba(255, 107, 107, 0.3);
 }
 
 .birthday {
@@ -177,6 +205,8 @@
 .wife {
   display: flex;
 }
+
+
 
 .img-husband,
 .img-wife {
@@ -327,7 +357,7 @@
   position: relative;
 }
 
-.location > view {
+.location>view {
   padding: 10rpx;
 }
 
@@ -525,11 +555,9 @@
 .greetings-item {
   padding: 14rpx 20rpx;
   color: white;
-  background: linear-gradient(
-    90deg,
-    rgba(133, 22, 14, 0.8) 0%,
-    rgba(133, 22, 14, 0.5) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(133, 22, 14, 0.8) 0%,
+      rgba(133, 22, 14, 0.5) 100%);
   border-radius: 10rpx;
   width: fit-content;
   word-wrap: break-word;
