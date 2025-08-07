@@ -206,8 +206,6 @@
   display: flex;
 }
 
-
-
 .img-husband,
 .img-wife {
   width: 390rpx;
@@ -357,7 +355,7 @@
   position: relative;
 }
 
-.location>view {
+.location > view {
   padding: 10rpx;
 }
 
@@ -555,9 +553,11 @@
 .greetings-item {
   padding: 14rpx 20rpx;
   color: white;
-  background: linear-gradient(90deg,
-      rgba(133, 22, 14, 0.8) 0%,
-      rgba(133, 22, 14, 0.5) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(133, 22, 14, 0.8) 0%,
+    rgba(133, 22, 14, 0.5) 100%
+  );
   border-radius: 10rpx;
   width: fit-content;
   word-wrap: break-word;
@@ -630,4 +630,100 @@
   width: 120rpx;
   height: 120rpx;
   filter: hue-rotate(180deg) brightness(1.2);
+}
+
+/* 时间线区域标题样式 */
+.timeline-section-title {
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.timeline-section-title .title-main {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #8b4513;
+  margin-bottom: 16rpx;
+  letter-spacing: 4rpx;
+  text-shadow: 0 2rpx 8rpx rgba(139, 69, 19, 0.2);
+}
+
+.timeline-section-title .title-sub {
+  font-size: 28rpx;
+  color: #a0522d;
+  font-style: italic;
+  letter-spacing: 2rpx;
+  opacity: 0.8;
+}
+
+/* 简单水平时间线样式 */
+.simple-timeline {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 40rpx 20rpx;
+  background: linear-gradient(135deg, #faf8f6 0%, #f7f3f0 100%);
+  border-radius: 20rpx;
+  margin: 0 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(139, 69, 19, 0.1);
+}
+
+.timeline-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+  position: relative;
+}
+
+.timeline-time {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #8b4513;
+  margin-bottom: 16rpx;
+  font-family: "Courier New", monospace;
+}
+
+.timeline-title {
+  font-size: 28rpx;
+  color: #a0522d;
+  line-height: 1.4;
+  max-width: 200rpx;
+}
+
+/* 婚礼倒计时样式 */
+.wedding-countdown {
+  background: linear-gradient(135deg, #e8b4b8 0%, #d4a0a4 100%);
+  border-radius: 16rpx;
+  padding: 24rpx 30rpx;
+  margin: 0 40rpx;
+  box-shadow: 0 4rpx 16rpx rgba(232, 180, 184, 0.3);
+  color: white;
+  text-align: center;
+}
+
+.countdown-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+}
+
+.countdown-text {
+  font-size: 28rpx;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.countdown-number {
+  font-size: 48rpx;
+  font-weight: bold;
+  font-family: "Courier New", monospace;
+  text-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.2);
+}
+
+.countdown-unit {
+  font-size: 28rpx;
+  font-weight: 500;
+  opacity: 0.9;
 }

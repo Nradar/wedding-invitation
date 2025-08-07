@@ -175,10 +175,31 @@
     <view>{{ weddingTimeStr[2] }}</view>
     <view>{{ weddingTimeStr[3] }}</view>
 </view>
+<view class="tc lh21 mb100">
+    <image class="img-separate mb100" src="https://h5cdn.hunbei.com/editorCustomPic/2022-1-26-rx4ZZi3KdMErdNk4E2X3EHh3EiB3bPdY.gif?imageMogr2/auto-orient/thumbnail/864x27>" mode="aspectFit" />
+    <view class="timeline-section-title mb100">
+        <view class="title-main">婚礼日程安排</view>
+        <view class="title-sub">Wedding Timeline</view>
+    </view>
+    <view class="wedding-countdown mb58" wx:if="{{ isWeddingUpcoming }}">
+        <view class="countdown-content">
+            <text class="countdown-text">距离我们的婚礼还有</text>
+            <text class="countdown-number">{{ daysUntilWedding }}</text>
+            <text class="countdown-unit">天</text>
+        </view>
+    </view>
+    <view class="simple-timeline">
+        <view class="timeline-item" wx:for="{{ timelineEvents }}" wx:key="id">
+            <view class="timeline-time">{{ item.startTime }}</view>
+            <view class="timeline-title">{{ item.project }}</view>
+        </view>
+    </view>
+</view>
 <view class="location mb100">
     <view>
         <view>{{ location.name }}</view>
         <view>{{ location.address }}</view>
+        <view>席设宴会厅：水上汴京</view>
     </view>
     <map longitude="{{ location.longitude }}" latitude="{{ location.latitude }}" enable-zoom="{{ false }}" enable-scroll="{{ false }}" markers="{{ location.markers }}" />
     <view class="location-mask" bindtap="openLocation"></view>

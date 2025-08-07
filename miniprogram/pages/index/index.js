@@ -124,7 +124,25 @@ Page({
 
             // 结尾图2
             // end2: 'https://res.wx.qq.com/t/fed_upload/9b5bad9c-216b-4fd5-a3da-01bdb3a5e832/end2.jpg'
-        }
+        },
+
+        // 婚礼时间线事件
+        timelineEvents: [
+            {
+                id: 'guests_arriving',
+                project: '宾客到场',
+                startTime: '17:18',
+            },
+            {
+                id: 'reception',
+                project: '婚礼晚宴',
+                startTime: '18:18',
+            }
+        ],
+
+        // 倒计时相关数据
+        isWeddingUpcoming: false,
+        daysUntilWedding: 0
     },
 
     // 小程序加载时，拉取表单信息并填充，以及格式化各种婚礼时间
@@ -165,6 +183,14 @@ Page({
                 this.lunisolarDate.format('YYYY年MM月DD号')
             ]
         })
+
+        // 计算倒计时
+        this.calculateCountdown()
+
+        // 设置每日更新倒计时的定时器
+        this.countdownTimer = setInterval(() => {
+            this.calculateCountdown()
+        }, 24 * 60 * 60 * 1000) // 每24小时更新一次
     },
 
     // 小程序卸载时，取消自动拉取祝福语定时器，销毁背景音乐
@@ -172,6 +198,11 @@ Page({
         if (this.timer !== null) {
             clearInterval(this.timer)
             this.timer = null
+        }
+
+        if (this.countdownTimer !== null) {
+            clearInterval(this.countdownTimer)
+            this.countdownTimer = null
         }
 
         if (this.music !== null) {
@@ -586,5 +617,32 @@ Page({
                 })
             }
         })
+    },
+
+    // 计算倒计时
+    calculateCountdown() {
+        const weddingDate = this.data.weddingTime
+        const today = new Date()
+
+        if (weddingDate) {
+            const wedding = new Date(weddingDate)
+            const todayStr = today.toISOString().split('T')[0]
+            const weddingStr = wedding.toISOString().split('T')[0]
+            const isWeddingUpcoming = todayStr < weddingStr
+
+            // 计算距离婚礼的天数
+            let daysUntilWedding = 0
+            if (isWeddingUpcoming) {
+                const todayTime = new Date(todayStr).getTime()
+                const weddingTime = new Date(weddingStr).getTime()
+                const diffTime = weddingTime - todayTime
+                daysUntilWedding = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+            }
+
+            this.setData({
+                isWeddingUpcoming: isWeddingUpcoming,
+                daysUntilWedding: daysUntilWedding
+            })
+        }
     }
 })
