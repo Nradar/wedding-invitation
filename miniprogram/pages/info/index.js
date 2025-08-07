@@ -67,6 +67,12 @@ Page({
         this.checkManagerStatus()
     },
 
+    onUnload() {
+        // 重新启用自动滚动（当离开信息页面时）
+        const APP = getApp()
+        APP.enableAutoScroll()
+    },
+
     // 检查当前用户是否为管理员
     checkManagerStatus() {
         // Get user openid first
@@ -199,6 +205,8 @@ Page({
 
     //活动时间轴
     goTimeline() {
+        const APP = getApp()
+        APP.disableAutoScroll() // 禁用自动滚动
         wx.navigateTo({
             url: '../timeline/index'
         })

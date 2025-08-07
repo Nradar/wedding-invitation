@@ -239,6 +239,9 @@ Page({
             this.timer === null && (this.timer = setInterval(() => this.getGreetings(), 20000));
         }
 
+        // 重新启用自动滚动（当返回到首页时）
+        APP.enableAutoScroll()
+
         // 恢复自动滚动（只有在已经初始化过且不是暂停状态时才恢复）
         if (this.autoScrollInitialized && !this.data.autoScrollPaused) {
             this.startAutoScroll()
@@ -312,7 +315,7 @@ Page({
                             this.setData({
                                 maxScrollTop: maxScrollTop
                             })
-                            console.log('页面最大滚动高度:', maxScrollTop, '底部元素位置:', bottomRect.bottom, '窗口高度:', systemInfo.windowHeight)
+                            // console.log('页面最大滚动高度:', maxScrollTop, '底部元素位置:', bottomRect.bottom, '窗口高度:', systemInfo.windowHeight)
                         } else {
                             // 如果找不到底部元素，使用备选方案
                             query.selectAll('view').boundingClientRect((rects) => {
@@ -329,12 +332,12 @@ Page({
                                     this.setData({
                                         maxScrollTop: maxScrollTop
                                     })
-                                    console.log('使用备选方案 - 页面最大滚动高度:', maxScrollTop, '最大底部位置:', maxBottom, '窗口高度:', systemInfo.windowHeight)
+                                    // console.log('使用备选方案 - 页面最大滚动高度:', maxScrollTop, '最大底部位置:', maxBottom, '窗口高度:', systemInfo.windowHeight)
                                 } else {
                                     // 如果都找不到，使用默认值
                                     const defaultHeight = 9600 // 默认页面高度
                                     const maxScrollTop = Math.max(0, defaultHeight - systemInfo.windowHeight)
-                                    console.log('使用默认高度:', maxScrollTop, '窗口高度:', systemInfo.windowHeight)
+                                    // console.log('使用默认高度:', maxScrollTop, '窗口高度:', systemInfo.windowHeight)
                                     this.setData({
                                         maxScrollTop: maxScrollTop
                                     })
@@ -370,11 +373,17 @@ Page({
     // 开始自动滚动
     startAutoScroll() {
         // console.log('开始自动滚动, autoScrollPaused:', this.data.autoScrollPaused)
-        if (this.data.autoScrollPaused || this.formFocused) return
+        if (this.data.autoScrollPaused || this.formFocused || !APP.globalData.autoScrollEnabled) return
 
         this.stopAutoScroll() // 先停止之前的滚动
 
         this.autoScrollTimer = setInterval(() => {
+            // 再次检查全局开关
+            if (!APP.globalData.autoScrollEnabled) {
+                this.stopAutoScroll()
+                return
+            }
+
             const { currentScrollTop, maxScrollTop } = this.data
             // console.log('自动滚动中, currentScrollTop:', currentScrollTop, 'maxScrollTop:', maxScrollTop)
 
@@ -711,6 +720,7 @@ Page({
     // 跳转到公告栏页面
     goInfo() {
         this.handleUserInteraction() // 用户交互
+        APP.disableAutoScroll() // 禁用自动滚动
 
         wx.navigateTo({
             url: '../info/index'
@@ -720,6 +730,7 @@ Page({
     // 跳转到管理员管理页面（仅超级管理员可见）
     goAdmin() {
         this.handleUserInteraction() // 用户交互
+        APP.disableAutoScroll() // 禁用自动滚动
 
         if (this.data.isSuperAdmin) {
             wx.navigateTo({

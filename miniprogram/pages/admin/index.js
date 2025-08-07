@@ -24,6 +24,11 @@ Page({
         this.loadUsers()
     },
 
+    onUnload() {
+        // 重新启用自动滚动（当离开管理员页面时）
+        APP.enableAutoScroll()
+    },
+
     // 检查是否为超级管理员（Corn）
     checkSuperAdmin() {
         const CORN_OPENID = 'oddtMvoHhuv5eumbiFstJ1qA8CbE'

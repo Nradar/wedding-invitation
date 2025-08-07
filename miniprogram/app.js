@@ -1,6 +1,7 @@
 App({
     globalData: {
         isSinglePage: null, // 是否单页模式
+        autoScrollEnabled: true, // 全局自动滚动开关
 
         // 以上变量都不用动，以下变量是需要修改的
 
@@ -37,6 +38,16 @@ App({
 
         // 纪念日（如果是一见钟情的话，建议用第一次见面那天）
         anniversary: '2018.03.11'
+    },
+
+    // 全局方法：禁用自动滚动
+    disableAutoScroll() {
+        this.globalData.autoScrollEnabled = false
+    },
+
+    // 全局方法：启用自动滚动
+    enableAutoScroll() {
+        this.globalData.autoScrollEnabled = true
     },
 
     // 小程序启动时，初始化云开发环境

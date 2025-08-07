@@ -16,6 +16,12 @@ Page({
         this.loadEventsFromCloud();
     },
 
+    onUnload() {
+        // 重新启用自动滚动（当离开时间线页面时）
+        const APP = getApp()
+        APP.enableAutoScroll()
+    },
+
     // 从云数据库加载事件数据
     async loadEventsFromCloud() {
         try {
