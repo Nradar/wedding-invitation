@@ -209,14 +209,18 @@
 <view class="phone mb100">
     <view class="phone-item" wx:for="{{ couple }}" wx:key="name">
         <image class="couple-cover" src="{{ item.image }}" mode="aspectFit" />
-        <button bindtap="call" data-phone="{{ item.number }}">
+        <!-- <button bindtap="call" data-phone="{{ item.number }}">
             <image src="../../images/icon/phone.png" mode="aspectFit" />
             联系{{ item.alias }}
-        </button>
+        </button> -->
     </view>
 </view>
 <form wx:if="{{ magic }}" bindsubmit="submit">
     <view class="form tc mb100">
+        <!-- 表单引导短语 -->
+        <view class="form-guide">
+            <text>💝 写下你的祝福，让我们一起见证这份美好 💝</text>
+        </view>
         <view>
             <text>*</text>
             <input type="text" placeholder="姓名" name="name" value="{{ form.name }}" placeholder-class="form-input-placeholder" maxlength="10" />
@@ -280,7 +284,11 @@
 <!-- 祝福语轮播以及底部快捷跳转 -->
 <view wx:if="{{ magic }}" class="greetings">
     <view class="greetings-list">
-        <view class="greetings-item {{ activeIdx === index ? 'active' : '' }}" wx:for="{{ greetings }}" wx:key="_id" bind:animationend="onAnimationend">
+        <!-- 引导短语 -->
+        <view class="greetings-guide {{ activeIdx === 0 ? 'active' : '' }}" bind:animationend="onAnimationend">
+            <text>💝 写下你的祝福，让我们一起见证这份美好 💝</text>
+        </view>
+        <view class="greetings-item {{ activeIdx === index + 1 ? 'active' : '' }}" wx:for="{{ greetings }}" wx:key="_id" bind:animationend="onAnimationend">
             <text class="greetings-name">{{ item.name }}：</text>
             {{ item.greeting || '新婚快乐' }}
         </view>

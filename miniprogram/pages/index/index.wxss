@@ -169,22 +169,25 @@
 .moon-label {
   position: absolute;
   top: -20rpx;
-  color: white;
   padding: 8rpx 16rpx;
   border-radius: 20rpx;
   font-size: 24rpx;
-  font-weight: bold;
+  font-weight: 600;
   z-index: 10;
+  background: transparent;
+  color: #fff;
+  letter-spacing: 1rpx;
+  text-transform: uppercase;
 }
 
 .husband-moon-label {
-  background: linear-gradient(135deg, #4ecdc4, #44a08d);
-  box-shadow: 0 4rpx 12rpx rgba(78, 205, 196, 0.3);
+  text-shadow: 0 0 5rpx #4a90e2, 0 0 10rpx #4a90e2, 0 0 15rpx #4a90e2,
+    0 0 20rpx #4a90e2, 0 2rpx 4rpx rgba(0, 0, 0, 0.8);
 }
 
 .wife-moon-label {
-  background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
-  box-shadow: 0 4rpx 12rpx rgba(255, 107, 107, 0.3);
+  text-shadow: 0 0 5rpx #ff6b6b, 0 0 10rpx #ff6b6b, 0 0 15rpx #ff6b6b,
+    0 0 20rpx #ff6b6b, 0 2rpx 4rpx rgba(0, 0, 0, 0.8);
 }
 
 .birthday {
@@ -413,6 +416,32 @@
   gap: 40rpx;
 }
 
+.form-guide {
+  padding: 40rpx 0 30rpx 0;
+  color: #8b7355;
+  font-size: 24rpx;
+  font-weight: 400;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  letter-spacing: 1rpx;
+  line-height: 1.8;
+  font-family: "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-guide text {
+  position: relative;
+  z-index: 2;
+  background: white;
+  padding: 0 60rpx;
+  display: inline-block;
+  text-align: center;
+}
+
 .form view {
   position: relative;
 }
@@ -539,6 +568,7 @@
   align-items: flex-end;
   width: 100%;
   box-sizing: border-box;
+  z-index: 50;
 }
 
 .greetings-list {
@@ -548,6 +578,33 @@
   pointer-events: none;
   width: 66%;
   position: relative;
+}
+
+.greetings-guide {
+  padding: 12rpx 18rpx;
+  color: white;
+  background: linear-gradient(
+    90deg,
+    rgba(133, 22, 14, 0.8) 0%,
+    rgba(133, 22, 14, 0.5) 100%
+  );
+  border-radius: 10rpx;
+  width: fit-content;
+  word-wrap: break-word;
+  word-break: break-all;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  transform: translateX(calc(-100% - 40rpx));
+  font-size: 24rpx;
+  font-weight: 500;
+  text-align: left;
+  box-shadow: 0 4rpx 12rpx rgba(255, 105, 180, 0.3);
+}
+
+.greetings-guide.active {
+  -webkit-animation: fadeInOutLeft 5s linear;
+  animation: fadeInOutLeft 5s linear;
 }
 
 .greetings-item {

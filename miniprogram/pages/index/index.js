@@ -432,7 +432,7 @@ Page({
                     isSuperAdmin,
                     managers,
                     greetings,
-                    ...(this.data.activeIdx === -1 && greetings.length ? { activeIdx: 0 } : {})
+                    ...(this.data.activeIdx === -1 ? { activeIdx: 0 } : {})
                 })
             }).catch((error) => {
                 console.error('Error getting managers:', error)
@@ -442,7 +442,7 @@ Page({
                     isSuperAdmin: openid === 'oddtMvoHhuv5eumbiFstJ1qA8CbE',
                     managers: [],
                     greetings,
-                    ...(this.data.activeIdx === -1 && greetings.length ? { activeIdx: 0 } : {})
+                    ...(this.data.activeIdx === -1 ? { activeIdx: 0 } : {})
                 })
             })
         }).catch((error) => {
@@ -452,8 +452,10 @@ Page({
 
     // 轮播动画结束时切换到下一个
     onAnimationend() {
+        // 计算总长度（引导短语 + 祝福语）
+        const totalLength = this.data.greetings.length + 1 // +1 是因为有引导短语
         this.setData({
-            activeIdx: (this.data.activeIdx === this.data.greetings.length - 1) ? 0 : (this.data.activeIdx + 1)
+            activeIdx: (this.data.activeIdx === totalLength - 1) ? 0 : (this.data.activeIdx + 1)
         })
     },
 
