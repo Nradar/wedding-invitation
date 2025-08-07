@@ -377,8 +377,8 @@ Page({
                 // console.log('滚动到底部，重新开始')
                 this.smoothScrollTo(0)
             } else {
-                // 继续向下滚动，每次滚动3px使滚动更明显
-                const newScrollTop = Math.min(currentScrollTop + 3, effectiveMaxScrollTop)
+                // 继续向下滚动，每次滚动5px使滚动更明显
+                const newScrollTop = Math.min(currentScrollTop + 6, effectiveMaxScrollTop)
                 // console.log('滚动到:', newScrollTop)
                 this.smoothScrollTo(newScrollTop)
             }
@@ -428,7 +428,7 @@ Page({
                 autoScrollPaused: false
             })
             this.startAutoScroll()
-        }, 20000) // 20秒
+        }, 10000) // 10秒
     },
 
     // 分享到会话
