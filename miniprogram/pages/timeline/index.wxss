@@ -83,3 +83,41 @@
 .control-switch {
     transform: scale(0.8);
 }
+
+/* 加载状态样式 */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 100rpx 20rpx;
+    background: white;
+    margin: 20rpx;
+    border-radius: 16rpx;
+    box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.loading-spinner {
+    width: 60rpx;
+    height: 60rpx;
+    border: 4rpx solid #f3f4f6;
+    border-top: 4rpx solid #e8b4b8;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 20rpx;
+}
+
+.loading-text {
+    font-size: 28rpx;
+    color: #6b7280;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

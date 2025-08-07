@@ -273,8 +273,8 @@ Page({
                     this.music.src = res.fileList[0].tempFileURL
                 }
             })
-            this.music.loop = true
-            this.music.autoplay = true
+            this.music.loop = false
+            this.music.autoplay = false
         }
 
         // 获取页面最大滚动高度

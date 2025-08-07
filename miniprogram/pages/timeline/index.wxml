@@ -20,6 +20,11 @@
             <text class="control-value">选择不同日期测试各种状态</text>
         </view> -->
     </view>
+    <!-- 加载状态 -->
+    <view class="loading-container" wx:if="{{loading}}">
+        <view class="loading-spinner"></view>
+        <text class="loading-text">加载中...</text>
+    </view>
     <!-- 时间线组件 -->
-    <timeline wedding-date="{{weddingDate}}" show-current-activity="{{showCurrentActivity}}" activities="{{activities}}" bind:activitytap="onActivityTap" bind:statusupdate="onStatusUpdate" />
+    <timeline wx:if="{{!loading}}" wedding-date="{{weddingDate}}" show-current-activity="{{showCurrentActivity}}" activities="{{activities}}" bind:activitytap="onActivityTap" bind:statusupdate="onStatusUpdate" />
 </view>
