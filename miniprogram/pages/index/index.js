@@ -159,6 +159,7 @@ Page({
         this.autoScrollTimer = null
         this.userInteractionTimer = null
         this.autoScrollInitialized = false
+        this.formFocused = false
 
         if (!isRemoved) {
             const db = wx.cloud.database()
@@ -369,7 +370,7 @@ Page({
     // 开始自动滚动
     startAutoScroll() {
         // console.log('开始自动滚动, autoScrollPaused:', this.data.autoScrollPaused)
-        if (this.data.autoScrollPaused) return
+        if (this.data.autoScrollPaused || this.formFocused) return
 
         this.stopAutoScroll() // 先停止之前的滚动
 
@@ -441,6 +442,31 @@ Page({
             })
             this.startAutoScroll()
         }, 10000) // 10秒
+    },
+
+    // 表单获得焦点
+    onFormFocus() {
+        console.log('表单获得焦点，停止自动滚动')
+        this.formFocused = true
+        this.stopAutoScroll()
+        this.setData({
+            autoScrollPaused: true
+        })
+    },
+
+    // 表单失去焦点
+    onFormBlur() {
+        console.log('表单失去焦点，恢复自动滚动')
+        this.formFocused = false
+        // 延迟恢复自动滚动，给用户一些时间
+        setTimeout(() => {
+            if (!this.formFocused) {
+                this.setData({
+                    autoScrollPaused: false
+                })
+                this.startAutoScroll()
+            }
+        }, 5000) // 5秒后恢复
     },
 
     // 分享到会话
