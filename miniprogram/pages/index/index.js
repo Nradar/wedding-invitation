@@ -142,7 +142,13 @@ Page({
 
         // 倒计时相关数据
         isWeddingUpcoming: false,
-        daysUntilWedding: 0
+        daysUntilWedding: 0,
+
+        // 自动滚动相关数据
+        isAutoScrolling: false, // 是否正在自动滚动
+        autoScrollPaused: true, // 是否暂停自动滚动（初始为true，等待延迟后启动）
+        currentScrollTop: 0, // 当前滚动位置
+        maxScrollTop: 0 // 页面最大滚动高度
     },
 
     // 小程序加载时，拉取表单信息并填充，以及格式化各种婚礼时间
@@ -150,6 +156,9 @@ Page({
         this.timer = null
         this.music = null
         this.isSubmit = false
+        this.autoScrollTimer = null
+        this.userInteractionTimer = null
+        this.autoScrollInitialized = false
 
         if (!isRemoved) {
             const db = wx.cloud.database()
@@ -178,8 +187,8 @@ Page({
             weddingTimeStr: [
                 this.lunisolarDate.format('YYYY-MM-DD HH:mm'),
                 this.lunisolarDate.getSeason(),
-                this.lunisolarDate.format('YYYY年MM月DD号  HH:mm'),
-                this.lunisolarDate.format('农历lMlD  dddd'),
+                this.lunisolarDate.format('YYYY年MM月DD号  HH:mm'),
+                this.lunisolarDate.format('农历lMlD  dddd'),
                 this.lunisolarDate.format('YYYY年MM月DD号')
             ]
         })
@@ -191,6 +200,9 @@ Page({
         this.countdownTimer = setInterval(() => {
             this.calculateCountdown()
         }, 24 * 60 * 60 * 1000) // 每24小时更新一次
+
+        // 初始化自动滚动
+        this.initAutoScroll()
     },
 
     // 小程序卸载时，取消自动拉取祝福语定时器，销毁背景音乐
@@ -209,6 +221,13 @@ Page({
             this.music.destroy()
             this.music = null
         }
+
+        // 清理自动滚动相关定时器
+        this.stopAutoScroll()
+        if (this.userInteractionTimer !== null) {
+            clearTimeout(this.userInteractionTimer)
+            this.userInteractionTimer = null
+        }
     },
 
     // 小程序可见时，拉取祝福语，并设置定时器每20s重新拉取一次祝福语
@@ -218,6 +237,11 @@ Page({
 
             this.timer === null && (this.timer = setInterval(() => this.getGreetings(), 20000));
         }
+
+        // 恢复自动滚动（只有在已经初始化过且不是暂停状态时才恢复）
+        if (this.autoScrollInitialized && !this.data.autoScrollPaused) {
+            this.startAutoScroll()
+        }
     },
 
     // 小程序不可见时，取消自动拉取祝福语定时器
@@ -226,6 +250,9 @@ Page({
             clearInterval(this.timer)
             this.timer = null
         }
+
+        // 暂停自动滚动
+        this.stopAutoScroll()
     },
 
     // 小程序可用时，初始化背景音乐并自动播放
@@ -248,6 +275,160 @@ Page({
             this.music.loop = true
             this.music.autoplay = true
         }
+
+        // 获取页面最大滚动高度
+        this.getPageScrollInfo()
+    },
+
+    // 页面滚动事件处理
+    onPageScroll(e) {
+        const { scrollTop } = e
+        const { currentScrollTop } = this.data
+
+        // 检测是否是用户手动滚动（滚动距离较大）
+        if (Math.abs(scrollTop - currentScrollTop) > 5) {
+            this.handleUserInteraction()
+        }
+
+        this.setData({
+            currentScrollTop: scrollTop
+        })
+    },
+
+    // 获取页面滚动信息
+    getPageScrollInfo() {
+        // 延迟获取页面信息，确保页面完全渲染
+        setTimeout(() => {
+            // 获取系统信息
+            wx.getSystemInfo({
+                success: (systemInfo) => {
+                    // 使用选择器获取页面内容高度
+                    const query = wx.createSelectorQuery()
+                    query.selectAll('view').boundingClientRect((rects) => {
+                        if (rects && rects.length > 0) {
+                            // 找到最底部的元素
+                            let maxBottom = 0
+                            rects.forEach(rect => {
+                                if (rect && rect.bottom) {
+                                    maxBottom = Math.max(maxBottom, rect.bottom)
+                                }
+                            })
+
+                            const maxScrollTop = Math.max(0, maxBottom - systemInfo.windowHeight)
+                            this.setData({
+                                maxScrollTop: maxScrollTop
+                            })
+                            // console.log('页面最大滚动高度:', maxScrollTop, '最大底部位置:', maxBottom, '窗口高度:', systemInfo.windowHeight)
+                        } else {
+                            // 如果找不到元素，使用一个默认值
+                            const defaultHeight = 4000 // 默认页面高度
+                            const maxScrollTop = Math.max(0, defaultHeight - systemInfo.windowHeight)
+                            this.setData({
+                                maxScrollTop: maxScrollTop
+                            })
+                            // console.log('使用默认高度:', maxScrollTop)
+                        }
+                    }).exec()
+                }
+            })
+        }, 1000)
+    },
+
+    // 初始化自动滚动
+    initAutoScroll() {
+        // console.log('初始化自动滚动')
+        // 确保初始状态为暂停
+        this.setData({
+            autoScrollPaused: true,
+            isAutoScrolling: false
+        })
+
+        // 延迟启动自动滚动，等待页面完全加载
+        setTimeout(() => {
+            // console.log('延迟后启动自动滚动')
+            this.autoScrollInitialized = true
+            this.setData({
+                autoScrollPaused: false
+            })
+            this.startAutoScroll()
+        }, 3000)
+    },
+
+    // 开始自动滚动
+    startAutoScroll() {
+        // console.log('开始自动滚动, autoScrollPaused:', this.data.autoScrollPaused)
+        if (this.data.autoScrollPaused) return
+
+        this.stopAutoScroll() // 先停止之前的滚动
+
+        this.autoScrollTimer = setInterval(() => {
+            const { currentScrollTop, maxScrollTop } = this.data
+            // console.log('自动滚动中, currentScrollTop:', currentScrollTop, 'maxScrollTop:', maxScrollTop)
+
+            // 如果maxScrollTop为0，使用一个默认值
+            let effectiveMaxScrollTop = maxScrollTop
+            if (maxScrollTop <= 0) {
+                effectiveMaxScrollTop = 3000 // 使用默认滚动高度
+                // console.log('使用默认滚动高度:', effectiveMaxScrollTop)
+            }
+
+            if (currentScrollTop >= effectiveMaxScrollTop) {
+                // 滚动到底部，重新开始
+                // console.log('滚动到底部，重新开始')
+                this.smoothScrollTo(0)
+            } else {
+                // 继续向下滚动，每次滚动3px使滚动更明显
+                const newScrollTop = Math.min(currentScrollTop + 3, effectiveMaxScrollTop)
+                // console.log('滚动到:', newScrollTop)
+                this.smoothScrollTo(newScrollTop)
+            }
+        }, 100) // 每100ms滚动3px，实现平滑滚动
+
+        this.setData({
+            isAutoScrolling: true
+        })
+        // console.log('自动滚动已启动')
+    },
+
+    // 停止自动滚动
+    stopAutoScroll() {
+        if (this.autoScrollTimer !== null) {
+            clearInterval(this.autoScrollTimer)
+            this.autoScrollTimer = null
+        }
+        this.setData({
+            isAutoScrolling: false
+        })
+    },
+
+    // 平滑滚动到指定位置
+    smoothScrollTo(targetScrollTop) {
+        wx.pageScrollTo({
+            scrollTop: targetScrollTop,
+            duration: 100 // 100ms的滚动动画，更平滑
+        })
+    },
+
+    // 处理用户交互
+    handleUserInteraction() {
+        // 停止自动滚动
+        this.stopAutoScroll()
+        this.setData({
+            autoScrollPaused: true
+        })
+
+        // 清除之前的定时器
+        if (this.userInteractionTimer !== null) {
+            clearTimeout(this.userInteractionTimer)
+        }
+
+        // 30秒后重新开始自动滚动
+        this.userInteractionTimer = setTimeout(() => {
+            this.setData({
+                autoScrollPaused: false
+            })
+            this.startAutoScroll()
+        }, 20000) // 20秒
     },
 
     // 分享到会话
@@ -268,6 +449,8 @@ Page({
 
     // 点击右上角音乐按钮控制音频播放和暂停
     toggleMusic() {
+        this.handleUserInteraction() // 用户交互
+
         if (this.music.paused) {
             this.music.play()
             this.setData({
@@ -283,6 +466,8 @@ Page({
 
     // 打开酒店定位
     openLocation() {
+        this.handleUserInteraction() // 用户交互
+
         const {
             latitude,
             longitude,
@@ -299,6 +484,8 @@ Page({
 
     // 仅用于获取定位信息，获取后会打印到控制台并写入到粘贴板，正式发布时记得注释起来
     chooseLocation() {
+        this.handleUserInteraction() // 用户交互
+
         wx.chooseLocation({
             success(res) {
                 wx.setClipboardData({
@@ -316,6 +503,8 @@ Page({
 
     // 呼叫
     call(e) {
+        this.handleUserInteraction() // 用户交互
+
         wx.makePhoneCall({
             phoneNumber: e.target.dataset.phone
         })
@@ -323,6 +512,8 @@ Page({
 
     // 提交表单
     submit(e) {
+        this.handleUserInteraction() // 用户交互
+
         if (!this.isSubmit) {
             const {
                 name,
@@ -461,6 +652,8 @@ Page({
 
     // 跳转到联系新郎新娘板块
     goPhone() {
+        this.handleUserInteraction() // 用户交互
+
         wx.pageScrollTo({
             selector: '.phone',
             offsetTop: -200
@@ -469,6 +662,8 @@ Page({
 
     // 跳转到写表单板块
     goWrite() {
+        this.handleUserInteraction() // 用户交互
+
         wx.pageScrollTo({
             selector: '.form',
             offsetTop: -200
@@ -477,6 +672,8 @@ Page({
 
     // 跳转到公告栏页面
     goInfo() {
+        this.handleUserInteraction() // 用户交互
+
         wx.navigateTo({
             url: '../info/index'
         })
@@ -484,6 +681,8 @@ Page({
 
     // 跳转到管理员管理页面（仅超级管理员可见）
     goAdmin() {
+        this.handleUserInteraction() // 用户交互
+
         if (this.data.isSuperAdmin) {
             wx.navigateTo({
                 url: '../admin/index'
@@ -498,6 +697,8 @@ Page({
 
     // 添加管理员（仅管理员可用）
     addManager() {
+        this.handleUserInteraction() // 用户交互
+
         if (!this.data.isManager) {
             wx.showToast({
                 title: '只有管理员才能添加管理员',
@@ -552,6 +753,8 @@ Page({
 
     // 移除管理员（仅管理员可用）
     removeManager() {
+        this.handleUserInteraction() // 用户交互
+
         if (!this.data.isManager) {
             wx.showToast({
                 title: '只有管理员才能移除管理员',

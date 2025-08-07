@@ -1,4 +1,4 @@
-<view class="title">
+<view class="title" bindtouchstart="handleUserInteraction" bindtouchmove="handleUserInteraction" bindtouchend="handleUserInteraction">
     <view>好久不见，婚礼见丨{{ couple[0].name }}&{{ couple[1].name }}</view>
     <view>我们结婚啦~</view>
 </view>
@@ -7,7 +7,7 @@
     敬呈
     <text class="date">{{ weddingTimeStr[0] }}</text>
 </view>
-<view class="cover-wrap">
+<view class="cover-wrap" bindtouchstart="handleUserInteraction" bindtouchmove="handleUserInteraction" bindtouchend="handleUserInteraction">
     <image class="img-cover-word" src="https://h5cdn.hunbei.com/editorCustomPic/2023-5-5-XpF8Q3dtRTsbfzTY8WwBwFWpDhiGPe5k?imageMogr2/auto-orient/thumbnail/747x693>" mode="aspectFit" />
     <view class="cover">
         <image class="img-invitation" src="https://h5cdn.hunbei.com/editorCustomPic/2022-11-4-N87SPKmaSQW7kZ3i7ZH4QHeMXpYhZzDs.png?imageMogr2/auto-orient/crop/!1455x384a457a363/quality/90|imageMogr2/thumbnail/659x174>" mode="aspectFit" />
@@ -31,7 +31,7 @@
 <view class="tc lh21 mb58">
     <view>光阴流转，月影沉沉</view>
     <!-- <view>此刻，我们愿邀你共赴一场静谧的欢喜</view> -->
-    <view class="mb58">此刻，我们愿邀你共赴一场静谧的欢喜</view>
+    <view class="mb58">此刻，我们愿邀您共赴一场静谧的欢喜</view>
     <view>婚礼并非只是誓约的仪式</view>
     <view>更是一次心照不宣的相聚</view>
     <view>是时光里，一次温柔的回响</view>
@@ -45,11 +45,11 @@
     <view class="moon">
         <view class="moon-item">
             <image class="img-moon" src="cloud://cloudbase-4gj6t13x12b6fc4b.636c-cloudbase-4gj6t13x12b6fc4b-1371179587/images/moon_1998.png" mode="aspectFit" />
-            <view class="moon-label wife-moon-label">新娘</view>
+            <!-- <view class="moon-label wife-moon-label">新娘</view> -->
         </view>
         <view class="moon-item">
             <image class="img-moon" src="cloud://cloudbase-4gj6t13x12b6fc4b.636c-cloudbase-4gj6t13x12b6fc4b-1371179587/images/moon_1994.png" mode="aspectFit" />
-            <view class="moon-label husband-moon-label">新郎</view>
+            <!-- <view class="moon-label husband-moon-label">新郎</view> -->
         </view>
         <view class="birthday">
             <text>1998.03.22</text>
@@ -152,7 +152,7 @@
     <image class="img-you mb100" src="https://h5cdn.hunbei.com/editorCustomPic/2022-8-22-PZQCrTaWTKSdJKe2Gd5FzatfyQWzZyjA.png?imageMogr2/auto-orient/thumbnail/603x118>/format/webp" mode="aspectFit" />
     <view>人的一生有三万多天</view>
     <view>很开心这一天</view>
-    <view>你专为我们而来</view>
+    <view>您专为我们而来</view>
     <view>捎上一份欢喜与笑意</view>
     <view>在{{ weddingTimeStr[4] }}这天，一同书写故事的下一页~</view>
 </view>
@@ -219,7 +219,7 @@
     <view class="form tc mb100">
         <!-- 表单引导短语 -->
         <view class="form-guide">
-            <text>💝 写下你的祝福，让我们一起见证这份美好 💝</text>
+            <text>💝 写下您的祝福，让我们一起见证这份美好 💝</text>
         </view>
         <view>
             <text>*</text>
@@ -286,7 +286,7 @@
     <view class="greetings-list">
         <!-- 引导短语 -->
         <view class="greetings-guide {{ activeIdx === 0 ? 'active' : '' }}" bind:animationend="onAnimationend">
-            <text>💝 写下你的祝福，让我们一起见证这份美好 💝</text>
+            <text>💝 写下您的祝福，让我们一起见证这份美好 💝</text>
         </view>
         <view class="greetings-item {{ activeIdx === index + 1 ? 'active' : '' }}" wx:for="{{ greetings }}" wx:key="_id" bind:animationend="onAnimationend">
             <text class="greetings-name">{{ item.name }}：</text>
