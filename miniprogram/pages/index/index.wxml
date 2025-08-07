@@ -168,7 +168,7 @@
     <view>邀您出席我们的婚礼仪式</view>
     <view>见证彼此人生中最温柔的交汇</view>
 </view>
-<view class="tc lh21 mb100">
+<view class="calendar-event tc lh21 mb100">
     <image class="img-separate mb100" src="https://h5cdn.hunbei.com/editorCustomPic/2022-1-26-rx4ZZi3KdMErdNk4E2X3EHh3EiB3bPdY.gif?imageMogr2/auto-orient/thumbnail/864x27>" mode="aspectFit" />
     <image class="img-calendar-title mb100" src="https://h5cdn.hunbei.com/editorCustomPic/2022-8-22-wybCS45p5fFnRhTpQB5x48WhY4bjEDj8.png?imageMogr2/auto-orient/thumbnail/511x117>/format/webp" mode="aspectFit" />
     <calendar id="calendar" date="{{ weddingTime }}"></calendar>
@@ -296,7 +296,7 @@
     </view>
     <view class="controller">
         <view class="controller-btn">
-            <image bindtap="goPhone" src="../../images/icon/phone.png" mode="widthFix" />
+            <image bindtap="goCalendar" src="../../images/icon/calendar-event.svg" mode="widthFix" />
         </view>
         <view class="controller-btn">
             <image bindtap="goWrite" src="../../images/icon/write.png" mode="widthFix" />

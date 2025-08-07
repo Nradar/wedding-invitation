@@ -688,13 +688,13 @@ Page({
         })
     },
 
-    // 跳转到联系新郎新娘板块
-    goPhone() {
+    // 跳转到主页日期板块
+    goCalendar() {
         this.handleUserInteraction() // 用户交互
 
         wx.pageScrollTo({
-            selector: '.phone',
-            offsetTop: -200
+            selector: '.calendar-event',
+            offsetTop: 20
         })
     },
 
