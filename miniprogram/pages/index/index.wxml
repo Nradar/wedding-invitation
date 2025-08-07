@@ -280,6 +280,7 @@
     <view class="mb28">好啦，狗粮撒到这里就差不多啦，剩下的我们留到婚礼上再呈现给大家吧，我们婚礼上见哦~💒👫🏻</view>
     <view>未完，待续</view>
     <view>爱，我们一直在路上</view>
+    <view class="bottom-element"></view>
 </view>
 <!-- 祝福语轮播以及底部快捷跳转 -->
 <view wx:if="{{ magic }}" class="greetings">

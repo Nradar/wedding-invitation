@@ -302,31 +302,43 @@ Page({
             // 获取系统信息
             wx.getSystemInfo({
                 success: (systemInfo) => {
-                    // 使用选择器获取页面内容高度
+                    // 使用选择器获取底部元素的高度
                     const query = wx.createSelectorQuery()
-                    query.selectAll('view').boundingClientRect((rects) => {
-                        if (rects && rects.length > 0) {
-                            // 找到最底部的元素
-                            let maxBottom = 0
-                            rects.forEach(rect => {
-                                if (rect && rect.bottom) {
-                                    maxBottom = Math.max(maxBottom, rect.bottom)
-                                }
-                            })
-
-                            const maxScrollTop = Math.max(0, maxBottom - systemInfo.windowHeight)
+                    query.select('.bottom-element').boundingClientRect((bottomRect) => {
+                        if (bottomRect) {
+                            // 使用底部元素的位置来计算最大滚动高度
+                            const maxScrollTop = Math.max(0, bottomRect.bottom - systemInfo.windowHeight)
                             this.setData({
                                 maxScrollTop: maxScrollTop
                             })
-                            // console.log('页面最大滚动高度:', maxScrollTop, '最大底部位置:', maxBottom, '窗口高度:', systemInfo.windowHeight)
+                            console.log('页面最大滚动高度:', maxScrollTop, '底部元素位置:', bottomRect.bottom, '窗口高度:', systemInfo.windowHeight)
                         } else {
-                            // 如果找不到元素，使用一个默认值
-                            const defaultHeight = 4000 // 默认页面高度
-                            const maxScrollTop = Math.max(0, defaultHeight - systemInfo.windowHeight)
-                            this.setData({
-                                maxScrollTop: maxScrollTop
-                            })
-                            // console.log('使用默认高度:', maxScrollTop)
+                            // 如果找不到底部元素，使用备选方案
+                            query.selectAll('view').boundingClientRect((rects) => {
+                                if (rects && rects.length > 0) {
+                                    // 找到最底部的元素
+                                    let maxBottom = 0
+                                    rects.forEach(rect => {
+                                        if (rect && rect.bottom) {
+                                            maxBottom = Math.max(maxBottom, rect.bottom)
+                                        }
+                                    })
+
+                                    const maxScrollTop = Math.max(0, maxBottom - systemInfo.windowHeight)
+                                    this.setData({
+                                        maxScrollTop: maxScrollTop
+                                    })
+                                    console.log('使用备选方案 - 页面最大滚动高度:', maxScrollTop, '最大底部位置:', maxBottom, '窗口高度:', systemInfo.windowHeight)
+                                } else {
+                                    // 如果都找不到，使用默认值
+                                    const defaultHeight = 9600 // 默认页面高度
+                                    const maxScrollTop = Math.max(0, defaultHeight - systemInfo.windowHeight)
+                                    console.log('使用默认高度:', maxScrollTop, '窗口高度:', systemInfo.windowHeight)
+                                    this.setData({
+                                        maxScrollTop: maxScrollTop
+                                    })
+                                }
+                            }).exec()
                         }
                     }).exec()
                 }
@@ -369,15 +381,15 @@ Page({
             let effectiveMaxScrollTop = maxScrollTop
             if (maxScrollTop <= 0) {
                 effectiveMaxScrollTop = 3000 // 使用默认滚动高度
-                // console.log('使用默认滚动高度:', effectiveMaxScrollTop)
+                console.log('使用默认滚动高度:', effectiveMaxScrollTop)
             }
 
             if (currentScrollTop >= effectiveMaxScrollTop) {
-                // 滚动到底部，重新开始
-                // console.log('滚动到底部，重新开始')
-                this.smoothScrollTo(0)
+                // 滚动到底部，停止自动滚动
+                console.log('滚动到底部，停止自动滚动')
+                this.stopAutoScroll()
             } else {
-                // 继续向下滚动，每次滚动5px使滚动更明显
+                // 继续向下滚动，每次滚动6px使滚动更明显
                 const newScrollTop = Math.min(currentScrollTop + 6, effectiveMaxScrollTop)
                 // console.log('滚动到:', newScrollTop)
                 this.smoothScrollTo(newScrollTop)
@@ -422,7 +434,7 @@ Page({
             clearTimeout(this.userInteractionTimer)
         }
 
-        // 30秒后重新开始自动滚动
+        // 10秒后重新开始自动滚动
         this.userInteractionTimer = setTimeout(() => {
             this.setData({
                 autoScrollPaused: false

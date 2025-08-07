@@ -784,3 +784,7 @@
   font-weight: 500;
   opacity: 0.9;
 }
+
+.bottom-element {
+  margin-top: 200rpx;
+}
