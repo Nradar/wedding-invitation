@@ -261,6 +261,17 @@ Page({
 
     // 小程序可用时，初始化背景音乐并自动播放
     onReady() {
+        // 不与其他音频混音，确保设备上正在播放的音乐被暂停/静音
+        try {
+            wx.setInnerAudioOption({
+                mixWithOther: false
+            })
+        } catch (e) { }
+        // 暂停微信内可能正在播放的背景音频
+        if (wx.pauseBackgroundAudio) {
+            try { wx.pauseBackgroundAudio() } catch (e) { }
+        }
+
         if (this.music === null) {
             this.music = wx.createInnerAudioContext({
                 useWebAudioImplement: false

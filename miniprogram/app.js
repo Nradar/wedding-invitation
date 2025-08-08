@@ -8,7 +8,7 @@ App({
         // 云开发服务是否已下架
         isRemoved: new Date() * 1 >= 1759233600000, // 自动党，用指定时间戳来控制自动下架
         // isRemoved: false, // 手动党（为防止加载初始项目时因为没有云开发环境而报错，我先设为true，等搞好云开发环境后再把它改回false）
-        magic: new Date() * 1 >= 1754654400000, 
+        magic: new Date() * 1 >= 1754654400000,
 
         // 婚礼日期时间
         weddingTime: '2025-09-20 17:18:00',
@@ -53,6 +53,12 @@ App({
             env: 'cloudbase-4gj6t13x12b6fc4b', // 云开发环境ID，在云开发控制台里可以查看
             traceUser: true
         })
+        // 全局设置音频策略：不与其他音频混音，进入页面播放本应用音频时暂停设备其他音频
+        try {
+            wx.setInnerAudioOption({
+                mixWithOther: false
+            })
+        } catch (e) { }
     },
 
     // 小程序可见时，判断是否为单页模式
