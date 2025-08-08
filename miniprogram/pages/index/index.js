@@ -236,7 +236,7 @@ Page({
         if (!isRemoved) {
             this.getGreetings()
 
-            this.timer === null && (this.timer = setInterval(() => this.getGreetings(), 20000));
+            this.timer === null && (this.timer = setInterval(() => this.getGreetings(), 60000));
         }
 
         // 重新启用自动滚动（当返回到首页时）
