@@ -196,12 +196,12 @@ Page({
     },
 
     // 分享到会话
-    onShareAppMessage() {
-        return {
-            title: '婚礼公告栏',
-            imageUrl: '../../images/infoPoster.jpg'
-        }
-    },
+    // onShareAppMessage() {
+    //     return {
+    //         title: '婚礼公告栏',
+    //         imageUrl: '../../images/infoPoster.jpg'
+    //     }
+    // },
 
     //活动时间轴
     goTimeline() {
