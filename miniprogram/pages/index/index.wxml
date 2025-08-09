@@ -263,7 +263,7 @@
         彩蛋
         <image src="../../images/icon/egg.png" mode="aspectFit" />
     </view>
-    <view class="mb28">该小程序由新郎新娘本人😎独立完成开发，如有雷同，没错，我参考了git上的一个模板，需要的小伙伴可以找我要源码哦😝</view>
+    <view class="mb28">该小程序由新郎新娘本人😎独立完成开发，如有雷同，没错，我们参考了git上的一个模板，需要的小伙伴可以找我要源码哦😝</view>
     <!-- 如果要加视频号的话可以用我封装好的channel组件，小程序个人号也能使用视频号卡片样式，参数和官方提供的channel-video基本一致 -->
     <!-- <view class="mb58">
         <channel finder-user-name="sphnQSkTBRwbRTK" feed-id="export/UzFfAgtgekIEAQAAAAAAPvkpzoO6XwAAAAstQy6ubaLX4KHWvLEZgBPE8YMMHW0eXf-HzNPgMJoermBiWqs9f6R0EzJgYBR1" poster="https://res.wx.qq.com/t/fed_upload/3da3dcc4-0add-4fb7-981f-587b291c1c69/propose.jpg" nickname="Jamin"></channel>
@@ -276,6 +276,9 @@
     <view class="mb28">好啦，狗粮撒到这里就差不多啦，剩下的我们留到婚礼上再呈现给大家吧，我们婚礼上见哦~💒👫🏻</view>
     <view>未完，待续</view>
     <view>爱，我们一直在路上</view>
+    <view class="version-info">
+        <text>版本号：{{ version }}</text>
+    </view>
     <view class="bottom-element"></view>
 </view>
 <!-- 祝福语轮播以及底部快捷跳转 -->

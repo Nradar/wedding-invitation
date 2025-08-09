@@ -523,13 +523,13 @@
 
 .egg {
   line-height: 1.6;
-  color: rgb(134, 134, 134);
-  font-size: 22rpx;
+  color: #333333; /* 改为更深的颜色 */
+  font-size: 28rpx; /* 增大字体 */
   margin-bottom: 180rpx;
 }
 
 .egg-title {
-  font-size: 32rpx;
+  font-size: 36rpx; /* 增大标题字体 */
   position: relative;
   display: inline-block;
   margin: 0 auto 28rpx;
@@ -537,6 +537,8 @@
   justify-content: center;
   align-items: center;
   width: fit-content;
+  color: #85160e; /* 标题使用主题色 */
+  font-weight: bold; /* 加粗标题 */
 }
 
 .egg-title::before,
@@ -547,7 +549,7 @@
   transform: translate3D(-100%, -50%, 0);
   content: "";
   width: 80rpx;
-  border-top: 2rpx dashed rgb(134, 134, 134);
+  border-top: 2rpx dashed #85160e; /* 改为主题色 */
 }
 
 .egg-title::after {
@@ -558,6 +560,7 @@
 .egg-title image {
   width: 40rpx;
   height: 40rpx;
+  margin-left: 10rpx; /* 添加图标间距 */
 }
 
 .greetings {
@@ -787,4 +790,21 @@
 
 .bottom-element {
   margin-top: 200rpx;
+}
+
+.version-info {
+  text-align: center;
+  margin-top: 40rpx;
+  margin-bottom: 20rpx;
+  padding: 20rpx;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 10rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.version-info text {
+  font-size: 24rpx;
+  color: #999;
+  font-family: "Courier New", monospace;
+  letter-spacing: 1rpx;
 }
