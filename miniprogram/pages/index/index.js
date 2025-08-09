@@ -716,8 +716,25 @@ Page({
     onAnimationend() {
         // 计算总长度（引导短语 + 祝福语）
         const totalLength = this.data.greetings.length + 1 // +1 是因为有引导短语
+
+        // 随机选择下一个显示的祝福语
+        let nextIdx
+        if (totalLength <= 1) {
+            // 如果没有祝福语，只显示引导短语
+            nextIdx = 0
+        } else if (totalLength === 2) {
+            // 如果只有引导短语和一个祝福语，交替显示
+            nextIdx = this.data.activeIdx === 0 ? 1 : 0
+        } else {
+            // 随机选择一个索引，包括引导短语（0）和所有祝福语（1到totalLength-1）
+            // 避免选择当前正在显示的祝福语
+            do {
+                nextIdx = Math.floor(Math.random() * totalLength)
+            } while (nextIdx === this.data.activeIdx)
+        }
+
         this.setData({
-            activeIdx: (this.data.activeIdx === totalLength - 1) ? 0 : (this.data.activeIdx + 1)
+            activeIdx: nextIdx
         })
     },
 
