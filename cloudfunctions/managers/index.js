@@ -41,7 +41,6 @@ exports.main = async (event, context) => {
                 const users = usersResult.data.map(user => ({
                     openid: user._openid,
                     name: user.name || '未命名用户',
-                    num: user.num || 0,
                     greeting: user.greeting || ''
                 }))
                 console.log('getUsers Print', usersResult, '---', users)

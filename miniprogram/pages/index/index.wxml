@@ -226,10 +226,6 @@
             <input type="text" placeholder="姓名" name="name" value="{{ form.name }}" placeholder-class="form-input-placeholder" maxlength="10" bindfocus="onFormFocus" bindblur="onFormBlur" />
         </view>
         <view>
-            <text>*</text>
-            <input type="number" placeholder="出席人数" name="num" value="{{ form.num }}" placeholder-class="form-input-placeholder" maxlength="2" bindfocus="onFormFocus" bindblur="onFormBlur" />
-        </view>
-        <view>
             <textarea type="text" placeholder="祝福语，可以上墙哦~" name="greeting" value="{{ form.greeting }}" placeholder-class="form-input-placeholder" maxlength="140" disable-default-padding bindfocus="onFormFocus" bindblur="onFormBlur" />
         </view>
         <button form-type="submit" open-type="getUserInfo">{{ name ? '更新' : '提交' }}</button>

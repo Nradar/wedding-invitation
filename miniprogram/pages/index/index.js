@@ -18,7 +18,6 @@ Page({
         activeIdx: isRemoved ? 0 : -1, // 祝福语轮播用，当前显示的祝福语索引值
         form: { // 表单信息
             name: '',
-            num: '',
             greeting: ''
         },
         weddingTimeStr: [''], // 格式化的婚礼日期列表
@@ -33,11 +32,9 @@ Page({
             // 云开发下架后显示的祝福语数据，可以在云开发环境销毁前把数据库的数据导出来并贴到这里
             {
                 name: '新郎 & 新娘',
-                num: 2,
                 greeting: '欢迎大家来见证我们的幸福时刻，我们婚礼上见哦~'
             }, {
                 name: '伴郎 & 伴娘',
-                num: 2,
                 greeting: '祝帅气的新郎和美丽的新娘新婚快乐~白头偕老💐'
             }
         ] : [],
@@ -168,13 +165,11 @@ Page({
                     if (res.data.length) {
                         const {
                             name,
-                            num,
                             greeting
                         } = res.data[0]
                         this.setData({
                             form: {
                                 name,
-                                num,
                                 greeting
                             }
                         })
@@ -577,22 +572,11 @@ Page({
 
         if (!this.isSubmit) {
             const {
-                name,
-                num
+                name
             } = e.detail.value
             if (name === '') {
                 wx.showToast({
                     title: '要写上名字哦~',
-                    icon: 'error'
-                })
-            } else if (num === '') {
-                wx.showToast({
-                    title: '要写上人数哦~',
-                    icon: 'error'
-                })
-            } else if (!/^[1-9]\d*$/.test(num)) {
-                wx.showToast({
-                    title: '人数不对哦~',
                     icon: 'error'
                 })
             } else {
@@ -612,7 +596,6 @@ Page({
                     }).then(({
                         result: {
                             name,
-                            num,
                             greeting,
                             _id
                         }
@@ -632,7 +615,6 @@ Page({
                         this.setData({
                             form: {
                                 name: '',
-                                num: '',
                                 greeting: ''
                             },
                             greetings

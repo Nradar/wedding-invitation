@@ -8,8 +8,7 @@ const surveys = db.collection('surveys')
 // 云函数入口函数
 exports.main = async (event, context) => {
     const { OPENID } = cloud.getWXContext()
-    let { name, num, greeting } = event
-    num *= 1
+    let { name, greeting } = event
 
     const { data: res } = await surveys.where({
         _openid: OPENID
@@ -20,7 +19,6 @@ exports.main = async (event, context) => {
         await surveys.doc(res[0]._id).update({
             data: {
                 name,
-                num,
                 greeting
             }
         })
@@ -29,7 +27,6 @@ exports.main = async (event, context) => {
         const addRes = await surveys.add({
             data: {
                 name,
-                num,
                 greeting,
                 _openid: OPENID
             }
@@ -39,7 +36,6 @@ exports.main = async (event, context) => {
 
     return {
         name,
-        num,
         greeting,
         _id
     }

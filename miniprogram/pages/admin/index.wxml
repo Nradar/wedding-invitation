@@ -176,7 +176,6 @@
                             <view class="user-info">
                                 <view class="user-name">
                                     <text class="name">{{item.name}}</text>
-                                    <text class="attendance">(出席人数: {{item.num}})</text>
                                 </view>
                                 <view class="user-greeting" wx:if="{{item.greeting}}">
                                     <text class="greeting-text">{{item.greeting}}</text>
