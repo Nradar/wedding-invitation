@@ -12,7 +12,7 @@ Page({
     },
 
     onShow() {
-        // 页面显示时刷新数据
+        // 页面显示时检查缓存，只在必要时刷新数据
         this.loadEventsFromCloud();
     },
 
@@ -22,8 +22,21 @@ Page({
         APP.enableAutoScroll()
     },
 
-    // 从云数据库加载事件数据
+    // 从云数据库加载事件数据（优化版本，使用全局缓存）
     async loadEventsFromCloud() {
+        const APP = getApp()
+        const cachedEvents = APP.getCache('events')
+
+        // 检查全局缓存是否有效
+        if (cachedEvents) {
+            console.log('使用全局缓存的事件数据')
+            this.setData({
+                activities: cachedEvents,
+                loading: false
+            });
+            return;
+        }
+
         try {
             this.setData({ loading: true });
 
@@ -38,10 +51,15 @@ Page({
                     status: 'pending' // 确保每个活动都有status字段
                 }));
 
+                // 更新全局缓存
+                APP.setCache('events', activities);
+
                 this.setData({
                     activities: activities,
                     loading: false
                 });
+
+                console.log('事件数据已更新并缓存到全局');
             } else {
                 console.error('Failed to load events:', result.result.message);
                 this.setData({ loading: false });
@@ -53,10 +71,20 @@ Page({
         } catch (error) {
             console.error('Error loading events:', error);
             this.setData({ loading: false });
-            wx.showToast({
-                title: '网络错误',
-                icon: 'none'
-            });
+
+            // 如果获取失败，尝试使用缓存数据
+            if (cachedEvents) {
+                console.log('使用备用缓存数据');
+                this.setData({
+                    activities: cachedEvents,
+                    loading: false
+                });
+            } else {
+                wx.showToast({
+                    title: '网络错误',
+                    icon: 'none'
+                });
+            }
         }
     },
 

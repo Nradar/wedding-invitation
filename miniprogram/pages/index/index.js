@@ -148,7 +148,7 @@ Page({
         isAutoScrolling: false, // 是否正在自动滚动
         autoScrollPaused: true, // 是否暂停自动滚动（初始为true，等待延迟后启动）
         currentScrollTop: 0, // 当前滚动位置
-        maxScrollTop: 0 // 页面最大滚动高度
+        maxScrollTop: 0, // 页面最大滚动高度
     },
 
     // 小程序加载时，拉取表单信息并填充，以及格式化各种婚礼时间
@@ -231,12 +231,15 @@ Page({
         }
     },
 
-    // 小程序可见时，拉取祝福语，并设置定时器每20s重新拉取一次祝福语
+    // 小程序可见时，拉取祝福语，并设置定时器每5分钟重新拉取一次祝福语（优化频率）
     onShow() {
         if (!isRemoved) {
             this.getGreetings()
 
-            this.timer === null && (this.timer = setInterval(() => this.getGreetings(), 60000));
+            // 减少调用频率：从60秒改为5分钟
+            if (this.timer === null) {
+                this.timer = setInterval(() => this.getGreetings(), 5 * 60 * 1000); // 5分钟更新一次
+            }
         }
 
         // 重新启用自动滚动（当返回到首页时）
@@ -645,58 +648,86 @@ Page({
         }
     },
 
-    // 获取祝福语和管理员列表
+    // 获取祝福语和管理员列表（优化版本，使用全局缓存）
     getGreetings() {
-        // Get greetings
-        wx.cloud.callFunction({
-            name: 'greetings'
-        }).then(({
-            result: {
-                greetings,
-                openid
-            }
-        }) => {
-            console.log('当前用户 openid:', openid)
+        const APP = getApp()
+        const cachedGreetings = APP.getCache('greetings')
+        const cachedManagers = APP.getCache('managers')
 
-            // Get managers list separately
-            wx.cloud.callFunction({
-                name: 'managers',
-                data: {
-                    action: 'getList'
-                }
-            }).then(({ result: managersResult }) => {
-                console.log('Managers result:', managersResult)
-                const managers = managersResult.success ? managersResult.managers : []
-                console.log('管理员列表:', managers)
-                console.log('管理员列表类型:', typeof managers)
-                console.log('管理员列表长度:', managers ? managers.length : 'undefined')
+        // 检查全局缓存是否有效
+        if (cachedGreetings && cachedManagers) {
+            console.log('使用全局缓存数据')
+            this.updateDataFromGlobalCache()
+            return
+        }
 
-                const isManager = managers && Array.isArray(managers) && managers.indexOf(openid) > -1
-                const CORN_OPENID = 'oddtMvoHhuv5eumbiFstJ1qA8CbE'
-                const isSuperAdmin = openid === CORN_OPENID
-                console.log('isManager: ', isManager, 'isSuperAdmin: ', isSuperAdmin, greetings.length)
+        console.log('全局缓存过期或不存在，重新获取数据')
+        this.fetchGreetingsAndManagers()
+    },
 
-                this.setData({
-                    isManager,
-                    isSuperAdmin,
-                    managers,
-                    greetings,
-                    ...(this.data.activeIdx === -1 ? { activeIdx: 0 } : {})
-                })
-            }).catch((error) => {
-                console.error('Error getting managers:', error)
-                // Set default values if managers call fails
-                this.setData({
-                    isManager: false,
-                    isSuperAdmin: openid === 'oddtMvoHhuv5eumbiFstJ1qA8CbE',
-                    managers: [],
-                    greetings,
-                    ...(this.data.activeIdx === -1 ? { activeIdx: 0 } : {})
-                })
-            })
-        }).catch((error) => {
-            console.error('Error getting greetings:', error)
+    // 从全局缓存更新数据
+    updateDataFromGlobalCache() {
+        const APP = getApp()
+        const greetings = APP.getCache('greetings') || []
+        const managers = APP.getCache('managers') || []
+        const openid = APP.getCache('openid') || ''
+        const CORN_OPENID = 'oddtMvoHhuv5eumbiFstJ1qA8CbE'
+
+        const isManager = managers && Array.isArray(managers) && managers.indexOf(openid) > -1
+        const isSuperAdmin = openid === CORN_OPENID
+
+        this.setData({
+            isManager,
+            isSuperAdmin,
+            managers,
+            greetings,
+            ...(this.data.activeIdx === -1 ? { activeIdx: 0 } : {})
         })
+    },
+
+    // 获取祝福语和管理员列表（合并请求，使用全局缓存）
+    async fetchGreetingsAndManagers() {
+        const APP = getApp()
+
+        try {
+            // 只调用greetings云函数，它已经包含了openid
+            const result = await wx.cloud.callFunction({
+                name: 'greetings'
+            })
+
+            const { greetings, openid } = result.result
+
+            // 获取管理员列表
+            const managersResult = await wx.cloud.callFunction({
+                name: 'managers',
+                data: { action: 'getList' }
+            })
+
+            const managers = managersResult.result.success ? managersResult.result.managers : []
+            const CORN_OPENID = 'oddtMvoHhuv5eumbiFstJ1qA8CbE'
+            const isManager = managers && Array.isArray(managers) && managers.indexOf(openid) > -1
+            const isSuperAdmin = openid === CORN_OPENID
+
+            // 更新全局缓存
+            APP.setCache('greetings', greetings)
+            APP.setCache('managers', managers)
+            APP.setCache('openid', openid)
+
+            this.setData({
+                isManager,
+                isSuperAdmin,
+                managers,
+                greetings,
+                ...(this.data.activeIdx === -1 ? { activeIdx: 0 } : {})
+            })
+
+            console.log('数据已更新并缓存到全局')
+
+        } catch (error) {
+            console.error('Error fetching data:', error)
+            // 如果获取失败，尝试使用缓存数据
+            this.updateDataFromGlobalCache()
+        }
     },
 
     // 轮播动画结束时切换到下一个

@@ -34,7 +34,16 @@ App({
         publisher: 'W&Z',
 
         // 纪念日（如果是一见钟情的话，建议用第一次见面那天）
-        anniversary: '2018.03.11'
+        anniversary: '2018.03.11',
+
+        // 全局缓存管理器
+        cache: {
+            greetings: null,
+            managers: null,
+            events: null,
+            lastUpdateTime: 0,
+            cacheExpiry: 5 * 60 * 1000 // 5分钟缓存过期时间
+        }
     },
 
     // 全局方法：禁用自动滚动
@@ -45,6 +54,31 @@ App({
     // 全局方法：启用自动滚动
     enableAutoScroll() {
         this.globalData.autoScrollEnabled = true
+    },
+
+    // 全局缓存管理方法
+    getCache(key) {
+        const cache = this.globalData.cache
+        const now = Date.now()
+
+        if (cache[key] && (now - cache.lastUpdateTime) < cache.cacheExpiry) {
+            return cache[key]
+        }
+        return null
+    },
+
+    setCache(key, data) {
+        const cache = this.globalData.cache
+        cache[key] = data
+        cache.lastUpdateTime = Date.now()
+    },
+
+    clearCache() {
+        const cache = this.globalData.cache
+        cache.greetings = null
+        cache.managers = null
+        cache.events = null
+        cache.lastUpdateTime = 0
     },
 
     // 小程序启动时，初始化云开发环境

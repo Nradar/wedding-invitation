@@ -24,8 +24,10 @@ exports.main = async (event, context) => {
                 }
 
             case 'getList':
-                // Get managers list for frontend use (just openids)
-                const listResult = await db.collection('managers').get()
+                // Get managers list for frontend use (just openids) - 优化查询
+                const listResult = await db.collection('managers').field({
+                    openid: true
+                }).get()
                 console.log('list result', listResult)
                 const managersList = listResult.data.map(item => item.openid)
                 return {
