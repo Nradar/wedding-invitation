@@ -32,10 +32,11 @@ Page({
             wechatQr: 'cloud://cloudbase-4gj6t13x12b6fc4b.636c-cloudbase-4gj6t13x12b6fc4b-1371179587/wechatQRCode/陈树一qrcode.jpg'
         }, {
             name: '伴娘：樊依娴',
-            number: 'XXXXXXXXXXX'
+            number: '13723160391'
         }, {
             name: '伴娘：程宇',
-            number: 'XXXXXXXXXXX'
+            number: '13120727320',
+            wechatQr: 'cloud://cloudbase-4gj6t13x12b6fc4b.636c-cloudbase-4gj6t13x12b6fc4b-1371179587/wechatQRCode/程语qrcode.jpg'
         }],
 
         // 定位信息（通过页面上的「选择位置并获取定位信息」按钮可以获取定位信息，发布前记得把按钮注释起来）
